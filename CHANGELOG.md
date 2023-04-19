@@ -5,7 +5,7 @@
 `2023-04-17`
 
 ### 开始
-- fork chatgpt-web
+- fork chatGPTx
 - 修改部分控件展示
 
 

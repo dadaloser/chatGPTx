@@ -4,7 +4,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-connect-timeout: '5'
-  name: gpt-web
+  name: chatGPTx
 spec:
   rules:
     - host: chatgpt.example.com
@@ -12,10 +12,10 @@ spec:
         paths:
           - backend:
               service:
-                name: gpt-web
+                name: chatGPTx
                 port:
                   number: 3002
             path: /
             pathType: ImplementationSpecific
   tls:
-    - secretName: gpt-web-tls
+    - secretName: chatGPTx-tls

@@ -1,11 +1,11 @@
 {
-  "name": "gpt-web",
+  "name": "chatGPTx",
   "version": "1.0.1",
   "private": false,
-  "description": "GPT Web",
+  "description": "chatGPTx",
   "author": "loser <1516963733@qq.com>",
   "keywords": [
-    "gpt-web",
+    "chatGPTx",
     "chatgpt",
     "chatbot",
     "vue"

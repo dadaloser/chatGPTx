@@ -5,7 +5,7 @@
 ![cover](./docs/c1.png)
 ![cover2](./docs/c2.png)
 
-- [GPT Web](#gpt-web)
+- [GPT Web](#chatGPTx)
 	- [介绍](#介绍)
 	- [待实现路线](#待实现路线)
 	- [前置要求](#前置要求)
@@ -183,13 +183,13 @@ pnpm dev
 #### Docker build & Run
 
 ```bash
-docker build -t gpt-web .
+docker build -t chatGPTx .
 
 # 前台运行
-docker run --name gpt-web --rm -it -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key gpt-web
+docker run --name chatGPTx --rm -it -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key chatGPTx
 
 # 后台运行
-docker run --name gpt-web -d -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key gpt-web
+docker run --name chatGPTx -d -p 127.0.0.1:3002:3002 --env OPENAI_API_KEY=your_api_key chatGPTx
 
 # 运行地址
 http://localhost:3002/
@@ -203,7 +203,7 @@ version: '3'
 
 services:
   app:
-    image: dadaloser/gpt-web # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
+    image: dadaloser/chatGPTx # 总是使用 latest ,更新时重新 pull 该 tag 镜像即可
     ports:
       - 127.0.0.1:3002:3002
     environment:
@@ -313,8 +313,8 @@ A: 一种可能原因是经过 Nginx 反向代理，开启了 buffer，则 Nginx
 
 感谢所有做过贡献的人!
 
-<a href="https://github.com/dadaloser/gpt-web/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=dadaloser/gpt-web" />
+<a href="https://github.com/dadaloser/chatGPTx/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dadaloser/chatGPTx" />
 </a>
 
 ## 赞助
