@@ -4,6 +4,7 @@ import { NModal, NTabPane, NTabs } from 'naive-ui'
 import General from './General.vue'
 import Advanced from './Advanced.vue'
 import About from './About.vue'
+import Config from './Config.vue'
 import { useAuthStore } from '@/store'
 import { SvgIcon } from '@/components/common'
 
@@ -48,19 +49,19 @@ const show = computed({
             <General />
           </div>
         </NTabPane>
+        <NTabPane v-if="isChatGPTAPI" name="Config" tab="Config">
+          <template #tab>
+            <SvgIcon class="text-lg" icon="ri:settings-line" />
+            <span class="ml-2">{{ $t('setting.config') }}</span>
+          </template>
+          <div class="min-h-[100px]">
+            <Config />
+          </div>
+        </NTabPane>
         <NTabPane v-if="isChatGPTAPI" name="Advanced" tab="Advanced">
           <template #tab>
             <SvgIcon class="text-lg" icon="ri:equalizer-line" />
             <span class="ml-2">{{ $t('setting.advanced') }}</span>
-          </template>
-          <div class="min-h-[100px]">
-            <Advanced />
-          </div>
-        </NTabPane>
-        <NTabPane v-if="isChatGPTAPI" name="Config" tab="Config">
-          <template #tab>
-            <SvgIcon class="text-lg" icon="ri:equalizer-line" />
-            <span class="ml-2">{{ $t('setting.config') }}</span>
           </template>
           <div class="min-h-[100px]">
             <Advanced />

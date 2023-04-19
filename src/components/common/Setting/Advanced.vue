@@ -15,6 +15,10 @@ const temperature = ref(settingStore.temperature ?? 0.5)
 
 const top_p = ref(settingStore.top_p ?? 1)
 
+const frequency_penalty = ref(settingStore.frequency_penalty ?? 0)
+
+const presence_penalty = ref(settingStore.presence_penalty ?? 0)
+
 function updateSettings(options: Partial<SettingsState>) {
   settingStore.updateSetting(options)
   ms.success(t('common.success'))
@@ -42,7 +46,7 @@ function handleReset() {
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[120px]">{{ $t('setting.temperature') }} </span>
         <div class="flex-1">
-          <NSlider v-model:value="temperature" :max="2" :min="0" :step="0.01" />
+          <NSlider v-model:value="temperature" :max="2" :min="0" :step="0.1" />
         </div>
         <span>{{ temperature }}</span>
         <NButton size="tiny" text type="primary" @click="updateSettings({ temperature })">
@@ -52,7 +56,7 @@ function handleReset() {
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[120px]">{{ $t('setting.top_p') }} </span>
         <div class="flex-1">
-          <NSlider v-model:value="top_p" :max="1" :min="0" :step="0.01" />
+          <NSlider v-model:value="top_p" :max="1" :min="0" :step="0.1" />
         </div>
         <span>{{ top_p }}</span>
         <NButton size="tiny" text type="primary" @click="updateSettings({ top_p })">
@@ -60,7 +64,27 @@ function handleReset() {
         </NButton>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">&nbsp;</span>
+        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.frequencyPenalty') }} </span>
+        <div class="flex-1">
+          <NSlider v-model:value="frequency_penalty" :max="2" :min="-2" :step="0.1" />
+        </div>
+        <span>{{ frequency_penalty }}</span>
+        <NButton size="tiny" text type="primary" @click="updateSettings({ frequency_penalty })">
+          {{ $t('common.save') }}
+        </NButton>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.presencePenalty') }} </span>
+        <div class="flex-1">
+          <NSlider v-model:value="presence_penalty" :max="2" :min="-2" :step="0.1" />
+        </div>
+        <span>{{ presence_penalty }}</span>
+        <NButton size="tiny" text type="primary" @click="updateSettings({ presence_penalty })">
+          {{ $t('common.save') }}
+        </NButton>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.resetConfigInfo') }}</span>
         <NButton size="small" @click="handleReset">
           {{ $t('common.reset') }}
         </NButton>
