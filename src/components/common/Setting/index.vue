@@ -36,7 +36,7 @@ const show = computed({
 </script>
 
 <template>
-  <NModal v-model:show="show" :auto-focus="false" preset="card" style="width: 95%; max-width: 640px">
+  <NModal v-model:show="show" :auto-focus="false" preset="card" style="width: 95%; max-width: 840px">
     <div>
       <NTabs v-model:value="active" type="line" animated>
         <NTabPane name="General" tab="General">
@@ -57,10 +57,19 @@ const show = computed({
             <Advanced />
           </div>
         </NTabPane>
-        <NTabPane name="Config" tab="Config">
+        <NTabPane v-if="isChatGPTAPI" name="Config" tab="Config">
+          <template #tab>
+            <SvgIcon class="text-lg" icon="ri:equalizer-line" />
+            <span class="ml-2">{{ $t('setting.config') }}</span>
+          </template>
+          <div class="min-h-[100px]">
+            <Advanced />
+          </div>
+        </NTabPane>
+        <NTabPane name="About" tab="About">
           <template #tab>
             <SvgIcon class="text-lg" icon="ri:list-settings-line" />
-            <span class="ml-2">{{ $t('setting.config') }}</span>
+            <span class="ml-2">{{ $t('setting.about') }}</span>
           </template>
           <About />
         </NTabPane>

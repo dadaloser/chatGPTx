@@ -55,6 +55,7 @@ export default {
     general: '일반',
     advanced: '고급',
     config: '설정',
+    about: '정보',
     avatarLink: '아바타 링크',
     name: '이름',
     description: '설명',
