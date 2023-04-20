@@ -2,7 +2,7 @@
   "name": "chatGPTx-service",
   "version": "1.0.0",
   "private": false,
-  "description": "GPT Web Service",
+  "description": "chatGPTx Service",
   "author": "dadaloser <1516963733@qq.com>",
   "keywords": [
     "chatGPTx",

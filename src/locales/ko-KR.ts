@@ -71,7 +71,7 @@ export default {
     chatHistory: '채팅 기록',
     theme: '테마',
     language: '언어',
-    model: '모델',
+    languageModel: '모델',
     api: 'API',
     reverseProxy: '리버스 프록시',
     timeout: '타임아웃',
@@ -79,6 +79,8 @@ export default {
     httpsProxy: 'HTTPS 프록시',
     balance: 'API 잔액',
     monthlyUsage: '월 사용량',
+    signIn: '로그인',
+    signUp: '등록',
   },
   store: {
     siderButton: '프롬프트 저장소',
@@ -96,5 +98,8 @@ export default {
     importRepeatTitle: '제목이 반복되어 건너뜀: {msg}',
     importRepeatContent: '내용이 반복되어 건너뜀: {msg}',
     onlineImportWarning: '참고: JSON 파일 소스를 확인하십시오!',
+  },
+  login: {
+    account: '',
   },
 }

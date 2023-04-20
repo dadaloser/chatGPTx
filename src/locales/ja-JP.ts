@@ -49,6 +49,8 @@ export default {
     clearHistoryConfirm: '确定清空聊天记录?',
     preview: '预览',
     showRawText: '显示原文',
+    signIn: '登录',
+    signUp: '注册',
   },
   setting: {
     setting: '设置',
@@ -71,7 +73,7 @@ export default {
     chatHistory: '聊天记录',
     theme: '主题',
     language: '语言',
-    model: '模型',
+    languageModel: '语言模型',
     api: 'API',
     reverseProxy: '反向代理',
     timeout: '超时',
@@ -97,5 +99,10 @@ export default {
     importRepeatContent: '内容重复跳过：{msg}',
     onlineImportWarning: '注意：请检查 JSON 文件来源！',
     downloadError: '请检查网络状态与 JSON 文件有效性',
+  },
+  login: {
+    account: '',
+    accountHint: '',
+    passwordHint: '',
   },
 }

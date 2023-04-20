@@ -71,7 +71,7 @@ export default {
     chatHistory: '聊天记录',
     theme: '主题',
     language: '语言',
-    model: '模型',
+    languageModel: '语言模型',
     api: 'API',
     reverseProxy: '反向代理',
     timeout: '超时',
@@ -79,6 +79,8 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API余额',
     monthlyUsage: '本月使用量',
+    signIn: '登录',
+    signUp: '注册',
   },
   store: {
     siderButton: '提示词商店',
@@ -97,5 +99,13 @@ export default {
     importRepeatContent: '内容重复跳过：{msg}',
     onlineImportWarning: '注意：请检查 JSON 文件来源！',
     downloadError: '请检查网络状态与 JSON 文件有效性',
+  },
+  login: {
+    account: '账号',
+    password: '密码',
+    email: '邮箱',
+    accountHint: '请输入账号',
+    passwordHint: '请输入密码',
+    emailHint: '请输入邮箱',
   },
 }

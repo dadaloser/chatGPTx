@@ -8,6 +8,7 @@ export interface SettingsState {
   top_p: number
   frequency_penalty: number
   presence_penalty: number
+  languageModel: string
 }
 
 export function defaultSetting(): SettingsState {
@@ -17,6 +18,7 @@ export function defaultSetting(): SettingsState {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
+    languageModel: 'gpt-3.5-turbo',
   }
 }
 

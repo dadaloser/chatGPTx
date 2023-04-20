@@ -4,7 +4,7 @@
 
 
 
-- [GPT Web](#chatGPTx)
+- [ChatGPT Web](#chatgpt-web)
 	- [介绍](#介绍)
 	- [待实现路线](#待实现路线)
 	- [前置要求](#前置要求)
@@ -38,7 +38,7 @@
 
 | 方式                                          | 免费？ | 可靠性     | 质量 |
 | --------------------------------------------- | ------ | ---------- | ---- |
-| `ChatGPTAPI(gpt-3.5-turbo-0301)`                           | 否     | 可靠       | 相对较笨 |
+| `ChatGPTAPI(gpt-3.5-turbo)`                           | 否     | 可靠       | 相对较笨 |
 | `ChatGPTUnofficialProxyAPI(网页 accessToken)` | 是     | 相对不可靠 | 聪明 |
 
 对比：

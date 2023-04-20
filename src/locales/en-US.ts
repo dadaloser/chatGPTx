@@ -71,7 +71,7 @@ export default {
     chatHistory: 'ChatHistory',
     theme: 'Theme',
     language: 'Language',
-    model: 'model',
+    languageModel: 'Language Model',
     api: 'API',
     reverseProxy: 'Reverse Proxy',
     timeout: 'Timeout',
@@ -79,6 +79,8 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API Balance',
     monthlyUsage: 'Monthly Usage',
+    signIn: 'Sign in',
+    signUp: 'Sign up',
   },
   store: {
     siderButton: 'Prompt Store',
@@ -97,5 +99,8 @@ export default {
     importRepeatContent: 'Content is repeatedly skipped: {msg}',
     onlineImportWarning: 'Note: Please check the JSON file source!',
     downloadError: 'Please check the network status and JSON file validity',
+  },
+  login: {
+    account: '',
   },
 }

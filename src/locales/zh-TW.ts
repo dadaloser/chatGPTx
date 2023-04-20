@@ -71,7 +71,7 @@ export default {
     chatHistory: '紀錄',
     theme: '主題',
     language: '語言',
-    model: '模型',
+    languageModel: '語言模型',
     api: 'API',
     reverseProxy: '反向代理',
     timeout: '逾時',
@@ -79,6 +79,8 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API Credit 餘額',
     monthlyUsage: '本月使用量',
+    signIn: '登錄',
+    signUp: '註冊',
   },
   store: {
     siderButton: '提示詞商店',
@@ -97,5 +99,8 @@ export default {
     importRepeatContent: '因內容重複跳過：{msg}',
     onlineImportWarning: '注意：請檢查 JSON 檔案來源！',
     downloadError: '請檢查網路狀態與 JSON 檔案有效性',
+  },
+  login: {
+    account: '',
   },
 }
