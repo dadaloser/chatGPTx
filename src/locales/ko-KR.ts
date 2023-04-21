@@ -19,6 +19,7 @@ export default {
     yes: '예',
     no: '아니오',
     confirm: '확인',
+    cancel: 'cancel',
     download: '다운로드',
     noData: '데이터 없음',
     wrong: '문제가 발생했습니다. 나중에 다시 시도하십시오.',

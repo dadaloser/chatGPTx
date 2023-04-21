@@ -18,8 +18,9 @@ const collapsed = computed(() => appStore.siderCollapsed)
 
 function handleAdd() {
   chatStore.addHistory({ title: 'New Chat', uuid: Date.now(), isEdit: false })
-  if (isMobile.value)
-    appStore.setSiderCollapsed(true)
+  // 不需要点击后关闭
+  // if (isMobile.value)
+  // appStore.setSiderCollapsed(true)
 }
 
 function handleUpdateCollapsed() {
@@ -73,6 +74,9 @@ watch(
       <main class="flex flex-col flex-1 min-h-0">
         <div class="p-4">
           <NButton dashed block @click="handleAdd">
+            <template #icon>
+              <SvgIcon icon="ri:close-circle-line" />
+            </template>
             {{ $t('chat.newChatButton') }}
           </NButton>
         </div>

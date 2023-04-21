@@ -56,7 +56,7 @@ function toggleUsingContext() {
           class="flex items-center justify-center w-11 h-11"
           @click="handleUpdateCollapsed"
         >
-          <SvgIcon v-if="collapsed" class="text-2xl" icon="ri:align-justify" />
+          <SvgIcon v-if="collapsed" class="text-2xl" icon="icon-park-outline:expand-left" />
           <SvgIcon v-else class="text-2xl" icon="ri:align-right" />
         </button>
       </div>

@@ -19,6 +19,7 @@ export default {
     yes: '是',
     no: '否',
     confirm: '確認',
+    cancel: 'cancel',
     download: '下載',
     noData: '目前無資料',
     wrong: '發生錯誤，請稍後再試。',
