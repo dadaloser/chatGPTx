@@ -9,6 +9,7 @@ interface Props {
 
 interface Emit {
   (ev: 'export'): void
+  (ev: 'clearRecord'): void
   (ev: 'toggleUsingContext'): void
 }
 
@@ -34,6 +35,10 @@ function onScrollToTop() {
 
 function handleExport() {
   emit('export')
+}
+
+function handleClear() {
+  emit('clearRecord')
 }
 
 function toggleUsingContext() {
@@ -62,14 +67,19 @@ function toggleUsingContext() {
         {{ currentChatHistory?.title ?? '' }}
       </h1>
       <div class="flex items-center space-x-2">
-        <HoverButton @click="toggleUsingContext">
-          <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
-            <SvgIcon icon="ri:chat-history-line" />
+        <HoverButton @click="handleClear">
+          <span class="text-xl text-[#4f555e] dark:text-white">
+            <SvgIcon icon="ri:delete-bin-line" />
           </span>
         </HoverButton>
         <HoverButton @click="handleExport">
           <span class="text-xl text-[#4f555e] dark:text-white">
             <SvgIcon icon="ri:download-2-line" />
+          </span>
+        </HoverButton>
+        <HoverButton @click="toggleUsingContext">
+          <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
+            <SvgIcon icon="ri:chat-history-line" />
           </span>
         </HoverButton>
       </div>

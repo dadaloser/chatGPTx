@@ -1,18 +1,19 @@
-version: '3'
+version: '1'
 
 services:
   app:
-    container_name: chatGPTx
-    image: dadaloser/chatGPTx # 总是使用latest,更新时重新pull该tag镜像即可
+    container_name: chatgptx
+    image: dadaloser/chatgptx # 总是使用latest,更新时重新pull该tag镜像即可
     ports:
-      - 3002:3002
+      - 127.0.0.1:5438:5438
     environment:
       # 二选一
-      OPENAI_API_KEY: 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
+      OPENAI_API_KEY: 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
       # 二选一
-      OPENAI_ACCESS_TOKEN:
+      # OPENAI_ACCESS_TOKEN:
+
       # API接口地址，可选，设置 OPENAI_API_KEY 时可用
-      OPENAI_API_BASE_URL:
+      OPENAI_API_BASE_URL: https://api.openai.com
       # API模型，可选，设置 OPENAI_API_KEY 时可用
       OPENAI_API_MODEL: gpt-3.5-turbo
       # 反向代理，可选

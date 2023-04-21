@@ -6,6 +6,7 @@
 - 添加用户信息:登录,注销
 - 添加自定义openAI的key
 - 调整设置dialog的布局
+- 添加图片的接口 : https://platform.openai.com/docs/api-reference/images/create
 - 
 
 

@@ -14,7 +14,7 @@ spec:
               service:
                 name: chatGPTx
                 port:
-                  number: 3002
+                  number: 5438
             path: /
             pathType: ImplementationSpecific
   tls:
