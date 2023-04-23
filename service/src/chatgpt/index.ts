@@ -87,9 +87,12 @@ async function chatReplyProcess(options: RequestOptions) {
   try {
     let options: SendMessageOptions = { timeoutMs }
 
+    // todo: 设定用户名
+
     if (apiModel === 'ChatGPTAPI') {
       if (isNotEmptyString(systemMessage))
         options.systemMessage = systemMessage
+
       options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty }
     }
 

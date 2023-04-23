@@ -7,6 +7,7 @@ const maxCount = (isNotEmptyString(MAX_REQUEST_PER_HOUR) && !isNaN(Number(MAX_RE
   ? parseInt(MAX_REQUEST_PER_HOUR)
   : 0 // 0 means unlimited
 
+// 请求频率限制
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000, // Maximum number of accesses within an hour
   max: maxCount,

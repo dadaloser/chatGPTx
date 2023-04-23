@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatGPTx
+  name: chatgptx
   labels:
-    app: chatGPTx
+    app: chatgptx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chatGPTx
+      app: chatgptx
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: chatGPTx
+        app: chatgptx
     spec:
       containers:
-        - image: dadaloser/chatGPTx
-          name: chatGPTx
+        - image: dadaloser/chatgptx
+          name: chatgptx
           imagePullPolicy: Always
           ports:
             - containerPort: 5438
@@ -44,23 +44,23 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 500Mi
+              memory: 1000Mi
             requests:
               cpu: 300m
-              memory: 300Mi
+              memory: 600Mi
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: chatGPTx
-  name: chatGPTx
+    app: chatgptx
+  name: chatgptx
 spec:
   ports:
-    - name: chatGPTx
+    - name: chatgptx
       port: 5438
       protocol: TCP
       targetPort: 5438
   selector:
-    app: chatGPTx
+    app: chatgptx
   type: ClusterIP
