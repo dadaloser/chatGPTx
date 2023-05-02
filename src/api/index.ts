@@ -43,6 +43,9 @@ export function fetchChatAPIProcess<T = any>(
       top_p: settingStore.top_p,
       frequency_penalty: settingStore.frequency_penalty,
       presence_penalty: settingStore.presence_penalty,
+      model: settingStore.language_model,
+      // user: settingStore.user,
+      gptNickname: settingStore.gptNickName,
     }
   }
 

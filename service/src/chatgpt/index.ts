@@ -46,7 +46,7 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
       debug: !disableDebug,
     }
 
-    // increase max token limit if use gpt-4
+    // todo: increase max token limit if use gpt-4
     if (model.toLowerCase().includes('gpt-4')) {
       // if use 32k model
       if (model.toLowerCase().includes('32k')) {
@@ -83,24 +83,27 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
 })()
 
 async function chatReplyProcess(options: RequestOptions) {
-  const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty } = options
+  const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickName, gptNickName } = options
   try {
     let options: SendMessageOptions = { timeoutMs }
 
-    // todo: 设定用户名
+    options.name = nickName
 
     if (apiModel === 'ChatGPTAPI') {
       if (isNotEmptyString(systemMessage))
         options.systemMessage = systemMessage
 
-      options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty }
+      // todo: user存用户id
+      options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty, user }
     }
 
     if (lastContext != null) {
-      if (apiModel === 'ChatGPTAPI')
+      if (apiModel === 'ChatGPTAPI') {
         options.parentMessageId = lastContext.parentMessageId
-      else
-        options = { ...lastContext }
+        options.name = gptNickName
+      }
+
+      else { options = { ...lastContext } }
     }
 
     const response = await api.sendMessage(message, {

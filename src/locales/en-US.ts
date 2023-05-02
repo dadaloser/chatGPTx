@@ -58,9 +58,9 @@ export default {
     config: 'Config',
     about: 'About',
     avatarLink: 'Avatar Link',
-    name: 'Name',
+    nickName: 'Nick Name',
     description: 'Description',
-    role: 'Role',
+    roleCharacter: 'Role character',
     temperature: 'Temperature',
     temperatureDesc: 'The larger the value, the more random the response. Values greater than 1 can cause garbled code',
     top_p: 'Top_p',
@@ -80,8 +80,8 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API Balance',
     monthlyUsage: 'Monthly Usage',
-    signIn: 'Sign in',
-    signUp: 'Sign up',
+    maxTokens: 'Max tokens',
+    gptNickName: 'GPT Nick Name',
   },
   store: {
     siderButton: 'Prompt Store',
@@ -102,6 +102,8 @@ export default {
     downloadError: 'Please check the network status and JSON file validity',
   },
   login: {
+    signIn: 'Sign in',
+    signUp: 'Sign up',
     account: '',
   },
 }

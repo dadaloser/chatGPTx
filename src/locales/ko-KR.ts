@@ -58,9 +58,9 @@ export default {
     config: '설정',
     about: '정보',
     avatarLink: '아바타 링크',
-    name: '이름',
+    nickName: '昵称',
     description: '설명',
-    role: '역할',
+    roleCharacter: '역할',
     temperature: '온도',
     temperatureDesc: '값이 클수록 답장이 랜덤이고 1보다 큰 값은 난코드를 초래할 수 있습니다',
     top_p: '임의 인자',
@@ -80,8 +80,9 @@ export default {
     httpsProxy: 'HTTPS 프록시',
     balance: 'API 잔액',
     monthlyUsage: '월 사용량',
-    signIn: '로그인',
-    signUp: '등록',
+    maxTokens: 'Max tokens',
+    gptNickName: 'GPT Nick Name',
+
   },
   store: {
     siderButton: '프롬프트 저장소',
@@ -101,6 +102,8 @@ export default {
     onlineImportWarning: '참고: JSON 파일 소스를 확인하십시오!',
   },
   login: {
+    signIn: '로그인',
+    signUp: '등록',
     account: '',
   },
 }

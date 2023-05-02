@@ -58,9 +58,9 @@ export default {
     config: '設定',
     about: '關於',
     avatarLink: '頭貼連結',
-    name: '名稱',
+    nickName: '昵称',
     description: '描述',
-    role: '角色設定',
+    roleCharacter: '角色設定',
     temperature: 'Temperature',
     temperatureDesc: '值越大,回復越隨機,大於1的值可能會導致亂碼',
     top_p: '隨機因子',
@@ -80,8 +80,9 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API Credit 餘額',
     monthlyUsage: '本月使用量',
-    signIn: '登錄',
-    signUp: '註冊',
+    maxTokens: 'Max tokens',
+    gptNickName: 'GPT Nick Name',
+
   },
   store: {
     siderButton: '提示詞商店',
@@ -102,6 +103,8 @@ export default {
     downloadError: '請檢查網路狀態與 JSON 檔案有效性',
   },
   login: {
+    signIn: '登錄',
+    signUp: '註冊',
     account: '',
   },
 }

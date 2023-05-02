@@ -58,9 +58,9 @@ export default {
     config: '配置',
     about: '关于',
     avatarLink: '头像链接',
-    name: '名称',
+    nickName: '昵称',
     description: '描述',
-    role: '角色设定',
+    roleCharacter: '角色设定',
     temperature: '随机性',
     temperatureDesc: '值越大,回复越随机,大于1的值可能会导致乱码',
     top_p: '随机因子',
@@ -80,8 +80,9 @@ export default {
     httpsProxy: 'HTTPS Proxy',
     balance: 'API余额',
     monthlyUsage: '本月使用量',
-    signIn: '登录',
-    signUp: '注册',
+    maxTokens: 'Max tokens',
+    gptNickName: 'GPT Nick Name',
+
   },
   store: {
     siderButton: '提示词商店',
@@ -102,6 +103,8 @@ export default {
     downloadError: '请检查网络状态与 JSON 文件有效性',
   },
   login: {
+    signIn: '登录',
+    signUp: '注册',
     account: '账号',
     password: '密码',
     email: '邮箱',

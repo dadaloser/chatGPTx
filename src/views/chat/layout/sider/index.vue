@@ -19,8 +19,8 @@ const collapsed = computed(() => appStore.siderCollapsed)
 function handleAdd() {
   chatStore.addHistory({ title: 'New Chat', uuid: Date.now(), isEdit: false })
   // 不需要点击后关闭
-  // if (isMobile.value)
-  // appStore.setSiderCollapsed(true)
+  if (isMobile.value)
+    appStore.setSiderCollapsed(true)
 }
 
 function handleUpdateCollapsed() {

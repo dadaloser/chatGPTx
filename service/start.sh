@@ -4,3 +4,4 @@ echo $! > ../service.pid
 echo "Start service complete!"
 
 # sudo ss -ntlp | grep LISTEN        
+# mac: lsof -i tcp:8081

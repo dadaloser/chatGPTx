@@ -8,6 +8,8 @@ export interface RequestProps {
   top_p?: number
   frequency_penalty?: number
   presence_penalty?: number
+  model?: string
+  gptNickName?: string
 }
 
 export interface ChatContext {

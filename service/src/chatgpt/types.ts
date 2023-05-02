@@ -10,6 +10,10 @@ export interface RequestOptions {
   top_p?: number
   frequency_penalty?: number
   presence_penalty?: number
+  model?: string
+  user?: string
+  nickName?: string
+  gptNickName?: string
 }
 
 export interface SetProxyOptions {

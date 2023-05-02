@@ -388,6 +388,22 @@ function handleClear() {
   })
 }
 
+// todo: 添加模型选择
+function handleChangeLanguageModel() {
+  if (loading.value)
+    return
+
+  dialog.warning({
+    title: t('chat.clearChat'),
+    content: t('chat.exportImage'),
+    positiveText: t('common.yes'),
+    negativeText: t('common.no'),
+    onPositiveClick: () => {
+      chatStore.clearChatByUuid(+uuid)
+    },
+  })
+}
+
 function handleEnter(event: KeyboardEvent) {
   if (!isMobile.value) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -410,7 +426,7 @@ function handleStop() {
   }
 }
 
-// 可优化部分
+// todo: 可优化部分
 // 搜索选项计算，这里使用value作为索引项，所以当出现重复value时渲染异常(多项同时出现选中效果)
 // 理想状态下其实应该是key作为索引项,但官方的renderOption会出现问题，所以就需要value反renderLabel实现
 const searchOptions = computed(() => {
@@ -531,9 +547,10 @@ onUnmounted(() => {
               <SvgIcon icon="ri:chat-history-line" />
             </span>
           </HoverButton>
-          <HoverButton @click="handleClear">
+          <HoverButton @click="handleChangeLanguageModel">
             <span class="text-xl text-[#4f555e] dark:text-white">
               <SvgIcon icon="icon-park-twotone:add-pic" />
+
             </span>
           </HoverButton>
           <NAutoComplete v-model:value="prompt" :options="searchOptions" :render-label="renderOption">

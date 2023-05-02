@@ -5,6 +5,8 @@ echo $! > ../front.pid
 echo "Start front complete!"
  
 # sudo ss -ntlp | grep LISTEN        
+#mac: lsof -i tcp:8081
+
 
 
 

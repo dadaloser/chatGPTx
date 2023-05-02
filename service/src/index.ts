@@ -23,7 +23,7 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty } = req.body as RequestProps
+    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, gptNickName } = req.body as RequestProps
     let firstChunk = true
     await chatReplyProcess({
       message: prompt,
@@ -37,6 +37,8 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
       top_p,
       frequency_penalty,
       presence_penalty,
+      model,
+      gptNickName,
     })
   }
   catch (error) {

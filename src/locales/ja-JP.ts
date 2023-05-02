@@ -50,8 +50,9 @@ export default {
     clearHistoryConfirm: '确定清空聊天记录?',
     preview: '预览',
     showRawText: '显示原文',
-    signIn: '登录',
-    signUp: '注册',
+    maxTokens: 'Max tokens',
+    gptNickName: 'GPT Nick Name',
+
   },
   setting: {
     setting: '设置',
@@ -60,9 +61,9 @@ export default {
     config: '配置',
     about: '关于',
     avatarLink: '头像链接',
-    name: '名称',
+    nickName: '昵称',
     description: '描述',
-    role: '角色设定',
+    roleCharacter: '角色设定',
     temperature: '随机性',
     temperatureDesc: '值越大,回复越随机,大于1的值可能会导致乱码',
     top_p: '随机因子',
@@ -102,6 +103,8 @@ export default {
     downloadError: '请检查网络状态与 JSON 文件有效性',
   },
   login: {
+    signIn: '登录',
+    signUp: '注册',
     account: '',
     accountHint: '',
     passwordHint: '',

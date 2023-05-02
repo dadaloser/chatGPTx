@@ -36,7 +36,7 @@ const show = computed({
         <NTabPane name="SignIn" tab="SignIn">
           <template #tab>
             <SvgIcon class="text-lg" icon="ri:user-line" />
-            <span class="ml-2">{{ $t('setting.signIn') }}</span>
+            <span class="ml-2">{{ $t('login.signIn') }}</span>
           </template>
 
           <div class="min-h-[100px]">
@@ -46,7 +46,7 @@ const show = computed({
         <NTabPane name="SignUp" tab="SignUp">
           <template #tab>
             <SvgIcon class="text-lg" icon="ri:file-user-line" />
-            <span class="ml-2">{{ $t('setting.signUp') }}</span>
+            <span class="ml-2">{{ $t('login.signUp') }}</span>
           </template>
           <div class="min-h-[100px]">
             <SignUp />
