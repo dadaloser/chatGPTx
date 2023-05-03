@@ -58,7 +58,7 @@ export default {
     config: '設定',
     about: '關於',
     avatarLink: '頭貼連結',
-    nickName: '昵称',
+    nickname: '昵称',
     description: '描述',
     roleCharacter: '角色設定',
     temperature: 'Temperature',
@@ -81,7 +81,7 @@ export default {
     balance: 'API Credit 餘額',
     monthlyUsage: '本月使用量',
     maxTokens: 'Max tokens',
-    gptNickName: 'GPT Nick Name',
+    gptNickname: 'GPT Nick Name',
 
   },
   store: {

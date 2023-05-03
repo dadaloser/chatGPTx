@@ -51,7 +51,7 @@ export default {
     preview: '预览',
     showRawText: '显示原文',
     maxTokens: 'Max tokens',
-    gptNickName: 'GPT Nick Name',
+    gptNickname: 'GPT Nick Name',
 
   },
   setting: {
@@ -61,7 +61,7 @@ export default {
     config: '配置',
     about: '关于',
     avatarLink: '头像链接',
-    nickName: '昵称',
+    nickname: '昵称',
     description: '描述',
     roleCharacter: '角色设定',
     temperature: '随机性',

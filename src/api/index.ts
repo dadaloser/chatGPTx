@@ -29,15 +29,17 @@ export function fetchChatAPIProcess<T = any>(
     onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void },
 ) {
   const settingStore = useSettingStore()
-  const authStore = useAuthStore()
-  const userStore = useUserStore()
 
+  const userStore = useUserStore()
+  const authStore = useAuthStore()
+
+  // 构建参数列表
   let data: Record<string, any> = {
     prompt: params.prompt,
     options: params.options,
   }
 
-  // 获取配置数据
+  // 获取配置数据,补齐
   if (authStore.isChatGPTAPI) {
     data = {
       ...data,
@@ -47,8 +49,8 @@ export function fetchChatAPIProcess<T = any>(
       frequency_penalty: settingStore.frequency_penalty,
       presence_penalty: settingStore.presence_penalty,
       model: settingStore.language_model,
-      user: userStore.userInfo.name,
-      name: settingStore.gptNickName,
+      user: userStore.userInfo.name, // todo: 要设置唯一的id值,
+      name: settingStore.gptNickname,
     }
   }
 

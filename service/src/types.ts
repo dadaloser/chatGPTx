@@ -10,8 +10,8 @@ export interface RequestProps {
   presence_penalty?: number
   model?: string
   user?: string
-  nickName?: string
-  gptNickName?: string
+  nickname?: string
+  gptNickname?: string
 }
 
 export interface ChatContext {

@@ -19,18 +19,21 @@ app.all('*', (_, res, next) => {
   next()
 })
 
-// chat请求,数据填入到响应的chatReplyProcess
+// chat请求,前端的数据填入到响应的chatReplyProcess
 router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickName, gptNickName } = req.body as RequestProps
+    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickname, gptNickname } = req.body as RequestProps
+
     let firstChunk = true
+
+    // 实际api的请求调用
     await chatReplyProcess({
       message: prompt,
       lastContext: options,
-      process: (chat: ChatMessage) => {
-        res.write(firstChunk ? JSON.stringify(chat) : `\n${JSON.stringify(chat)}`)
+      process: (chatMessage: ChatMessage) => {
+        res.write(firstChunk ? JSON.stringify(chatMessage) : `\n${JSON.stringify(chatMessage)}`)
         firstChunk = false
       },
       systemMessage,
@@ -40,8 +43,8 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
       presence_penalty,
       model,
       user,
-      nickName,
-      gptNickName,
+      nickname,
+      gptNickname,
     })
   }
   catch (error) {

@@ -58,7 +58,7 @@ export default {
     config: 'Config',
     about: 'About',
     avatarLink: 'Avatar Link',
-    nickName: 'Nick Name',
+    nickname: 'Nick Name',
     description: 'Description',
     roleCharacter: 'Role character',
     temperature: 'Temperature',
@@ -81,7 +81,7 @@ export default {
     balance: 'API Balance',
     monthlyUsage: 'Monthly Usage',
     maxTokens: 'Max tokens',
-    gptNickName: 'GPT Nick Name',
+    gptNickname: 'GPT Nick Name',
   },
   store: {
     siderButton: 'Prompt Store',

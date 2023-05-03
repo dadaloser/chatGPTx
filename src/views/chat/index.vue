@@ -93,6 +93,7 @@ async function onConversation() {
   let options: Chat.ConversationRequest = {}
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
+  // 连续对话
   if (lastContext && usingContext.value)
     options = { ...lastContext }
 

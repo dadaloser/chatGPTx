@@ -23,6 +23,7 @@ const ErrorCodeMessage: Record<string, string> = {
   500: '[OpenAI] 服务器繁忙，请稍后再试 | Internal Server Error',
 }
 
+// todo: 设置自由的超时时间
 const timeoutMs: number = !isNaN(+process.env.TIMEOUT_MS) ? +process.env.TIMEOUT_MS : 100 * 1000
 const disableDebug: boolean = process.env.OPENAI_API_DISABLE_DEBUG === 'true'
 
@@ -84,9 +85,10 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
   }
 })()
 
-// 响应的数据
+// todo: user存用户id
+// api请求,得到响应的数据
 async function chatReplyProcess(options: RequestOptions) {
-  const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickName, gptNickName } = options
+  const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickname, gptNickname } = options
   try {
     let options: SendMessageOptions = { timeoutMs }
 
@@ -98,6 +100,7 @@ async function chatReplyProcess(options: RequestOptions) {
       options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty, user }
     }
 
+    // api模式下要主动绑定父文本的id
     if (lastContext != null) {
       if (apiModel === 'ChatGPTAPI')
         options.parentMessageId = lastContext.parentMessageId
@@ -105,12 +108,14 @@ async function chatReplyProcess(options: RequestOptions) {
       else options = { ...lastContext }
     }
 
+    // isNotEmptyString(nickname) ? nickname : 'nicknameDef'
+
+    // 获取的是当前响应的数据
     const response = await api.sendMessage(message, {
       ...options,
-      name: 'nickName',
       onProgress: (partialResponse) => {
-        // 设置gpt nickname
-        partialResponse.name = gptNickName
+        // 设置响应的gpt名
+        partialResponse.name = isNotEmptyString(gptNickname) ? gptNickname : 'chatGPTxDef'
         process?.(partialResponse)
       },
     })

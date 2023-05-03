@@ -3,7 +3,7 @@ import type fetch from 'node-fetch'
 
 export interface RequestOptions {
   message: string
-  lastContext?: { conversationId?: string; parentMessageId?: string }
+  lastContext?: { conversationId?: string; parentMessageId?: string } // 控制是否连续对话
   process?: (chat: ChatMessage) => void
   systemMessage?: string
   temperature?: number
@@ -12,8 +12,8 @@ export interface RequestOptions {
   presence_penalty?: number
   model?: string
   user?: string
-  nickName?: string
-  gptNickName?: string
+  nickname?: string
+  gptNickname?: string
 }
 
 export interface SetProxyOptions {

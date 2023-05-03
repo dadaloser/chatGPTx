@@ -27,7 +27,7 @@ const languageModelOptions: { key: string; value: string }[] = [
   { key: 'gpt-4', value: 'gpt-4' },
 ]
 
-const gptNickName = ref(settingStore.gptNickName ?? '')
+const gptNickname = ref(settingStore.gptNickname ?? '')
 
 function updateSettings(options: Partial<SettingsState>) {
   settingStore.updateSetting(options)
@@ -45,9 +45,9 @@ function handleReset() {
   <div class="p-4 space-y-5 min-h-[200px]">
     <div class="space-y-6">
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.gptNickName') }}</span>
+        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.gptNickname') }}</span>
         <div class="w-[200px]">
-          <NInput v-model:value="gptNickName" placeholder="" />
+          <NInput v-model:value="gptNickname" placeholder="" />
         </div>
       </div>
       <div class="flex items-center space-x-4">
@@ -99,7 +99,7 @@ function handleReset() {
         <span class="flex-shrink-0 w-[30px]">{{ presence_penalty }}</span>
       </div>
       <div class="flex items-center justify-center space-x-4 ">
-        <NButton size="small" @click="updateSettings({ systemMessage, temperature, top_p, frequency_penalty, presence_penalty, language_model, gptNickName })">
+        <NButton size="small" @click="updateSettings({ systemMessage, temperature, top_p, frequency_penalty, presence_penalty, language_model, gptNickname })">
           {{ $t('common.save') }}
         </NButton>
         <NButton size="small" @click="handleReset">
