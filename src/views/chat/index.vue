@@ -54,10 +54,12 @@ dataSources.value.forEach((item, index) => {
     updateChatSome(+uuid, index, { loading: false })
 })
 
+// 前端发送消息
 function handleSubmit() {
   onConversation()
 }
 
+// 对话处理
 async function onConversation() {
   let message = prompt.value
 
@@ -80,17 +82,21 @@ async function onConversation() {
       requestOptions: { prompt: message, options: null },
     },
   )
+  // 滚动到底部
   scrollToBottom()
 
+  // 开始等待响应
   loading.value = true
   prompt.value = ''
 
+  // 对话请求
   let options: Chat.ConversationRequest = {}
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
   if (lastContext && usingContext.value)
     options = { ...lastContext }
 
+  // 添加一条记录
   addChat(
     +uuid,
     {
@@ -103,6 +109,7 @@ async function onConversation() {
       requestOptions: { prompt: message, options: { ...options } },
     },
   )
+  // 持续滚动到底部
   scrollToBottom()
 
   try {
@@ -185,6 +192,7 @@ async function onConversation() {
       return
     }
 
+    // 更新记录
     updateChat(
       +uuid,
       dataSources.value.length - 1,

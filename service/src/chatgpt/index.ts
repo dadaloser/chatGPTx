@@ -41,7 +41,9 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
     const OPENAI_API_BASE_URL = process.env.OPENAI_API_BASE_URL
 
     const options: ChatGPTAPIOptions = {
+      // todo: 设计自由填入
       apiKey: process.env.OPENAI_API_KEY,
+      // todo: 自由选择
       completionParams: { model },
       debug: !disableDebug,
     }
@@ -70,7 +72,7 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
   else {
     const options: ChatGPTUnofficialProxyAPIOptions = {
       accessToken: process.env.OPENAI_ACCESS_TOKEN,
-      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'https://bypass.churchless.tech/api/conversation',
+      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'https://ai.fakeopen.com/api/conversation',
       model,
       debug: !disableDebug,
     }
@@ -82,12 +84,11 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
   }
 })()
 
+// 响应的数据
 async function chatReplyProcess(options: RequestOptions) {
   const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickName, gptNickName } = options
   try {
     let options: SendMessageOptions = { timeoutMs }
-
-    options.name = nickName
 
     if (apiModel === 'ChatGPTAPI') {
       if (isNotEmptyString(systemMessage))
@@ -98,17 +99,18 @@ async function chatReplyProcess(options: RequestOptions) {
     }
 
     if (lastContext != null) {
-      if (apiModel === 'ChatGPTAPI') {
+      if (apiModel === 'ChatGPTAPI')
         options.parentMessageId = lastContext.parentMessageId
-        options.name = gptNickName
-      }
 
-      else { options = { ...lastContext } }
+      else options = { ...lastContext }
     }
 
     const response = await api.sendMessage(message, {
       ...options,
+      name: 'nickName',
       onProgress: (partialResponse) => {
+        // 设置gpt nickname
+        partialResponse.name = gptNickName
         process?.(partialResponse)
       },
     })
@@ -187,6 +189,7 @@ async function chatConfig() {
   })
 }
 
+// 设置代理
 function setupProxy(options: SetProxyOptions) {
   if (isNotEmptyString(process.env.SOCKS_PROXY_HOST) && isNotEmptyString(process.env.SOCKS_PROXY_PORT)) {
     const agent = new SocksProxyAgent({
@@ -215,6 +218,7 @@ function setupProxy(options: SetProxyOptions) {
   }
 }
 
+// 获取当前模型
 function currentModel(): ApiModel {
   return apiModel
 }

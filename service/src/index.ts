@@ -19,11 +19,12 @@ app.all('*', (_, res, next) => {
   next()
 })
 
+// chat请求,数据填入到响应的chatReplyProcess
 router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, gptNickName } = req.body as RequestProps
+    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickName, gptNickName } = req.body as RequestProps
     let firstChunk = true
     await chatReplyProcess({
       message: prompt,
@@ -38,6 +39,8 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
       frequency_penalty,
       presence_penalty,
       model,
+      user,
+      nickName,
       gptNickName,
     })
   }
@@ -49,6 +52,7 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   }
 })
 
+// 配置
 router.post('/config', auth, async (req, res) => {
   try {
     const response = await chatConfig()
@@ -59,6 +63,7 @@ router.post('/config', auth, async (req, res) => {
   }
 })
 
+// 会话
 router.post('/session', async (req, res) => {
   try {
     const AUTH_SECRET_KEY = process.env.AUTH_SECRET_KEY
@@ -70,6 +75,7 @@ router.post('/session', async (req, res) => {
   }
 })
 
+// 验证秘钥
 router.post('/verify', async (req, res) => {
   try {
     const { token } = req.body as { token: string }

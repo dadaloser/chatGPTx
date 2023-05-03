@@ -9,6 +9,8 @@ export interface RequestProps {
   frequency_penalty?: number
   presence_penalty?: number
   model?: string
+  user?: string
+  nickName?: string
   gptNickName?: string
 }
 

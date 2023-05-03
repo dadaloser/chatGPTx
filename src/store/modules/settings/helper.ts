@@ -9,6 +9,8 @@ export interface SettingsState {
   frequency_penalty: number
   presence_penalty: number
   language_model: string
+  user: string
+  nickName: string
   gptNickName: string // 给gpt起的名字
 }
 
@@ -20,7 +22,9 @@ export function defaultSetting(): SettingsState {
     frequency_penalty: 0,
     presence_penalty: 0,
     language_model: 'gpt-3.5-turbo',
-    gptNickName: 'last word', // 给gpt起的名字
+    user: 'default name',
+    nickName: 'default name',
+    gptNickName: 'chatGPTx', // 给gpt起的名字
   }
 }
 
