@@ -1,5 +1,4 @@
 import { ss } from '@/utils/storage'
-
 const LOCAL_NAME = 'settingsStorage'
 
 export interface SettingsState {
@@ -10,20 +9,19 @@ export interface SettingsState {
   presence_penalty: number
   language_model: string
   user: string
-  nickname: string
   gptNickname: string // 给gpt起的名字
 }
 
 export function defaultSetting(): SettingsState {
   return {
     systemMessage: 'You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown.',
+    // systemMessage: t('chat.newChatButton'),
     temperature: 0.8,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
     language_model: 'gpt-3.5-turbo',
     user: 'default name',
-    nickname: 'default name',
     gptNickname: 'chatGPTx', // 给gpt起的名字
   }
 }

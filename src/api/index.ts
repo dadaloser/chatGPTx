@@ -50,7 +50,8 @@ export function fetchChatAPIProcess<T = any>(
       presence_penalty: settingStore.presence_penalty,
       model: settingStore.language_model,
       user: userStore.userInfo.name, // todo: 要设置唯一的id值,
-      name: settingStore.gptNickname,
+      nickname: userStore.userInfo.name,
+      gptNickname: settingStore.gptNickname,
     }
   }
 

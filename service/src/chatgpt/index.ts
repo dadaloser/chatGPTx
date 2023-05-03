@@ -97,6 +97,8 @@ async function chatReplyProcess(options: RequestOptions) {
         options.systemMessage = systemMessage
 
       // todo: user存用户id
+      options.name = nickname
+
       options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty, user }
     }
 
@@ -107,8 +109,6 @@ async function chatReplyProcess(options: RequestOptions) {
 
       else options = { ...lastContext }
     }
-
-    // isNotEmptyString(nickname) ? nickname : 'nicknameDef'
 
     // 获取的是当前响应的数据
     const response = await api.sendMessage(message, {
