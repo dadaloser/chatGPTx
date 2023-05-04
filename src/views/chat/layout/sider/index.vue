@@ -7,6 +7,7 @@ import Footer from './Footer.vue'
 import { useAppStore, useChatStore } from '@/store'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { PromptStore } from '@/components/common'
+import add_chat from '@/assets/add_chat.svg'
 
 const appStore = useAppStore()
 const chatStore = useChatStore()
@@ -46,6 +47,7 @@ const mobileSafeArea = computed(() => {
   return {}
 })
 
+// 监控布局
 watch(
   isMobile,
   (val) => {
@@ -63,7 +65,7 @@ watch(
     :collapsed="collapsed"
     :collapsed-width="0"
     :width="260"
-    :show-trigger="isMobile ? false : 'arrow-circle'"
+    :show-trigger="isMobile ? false : 'bar'"
     collapse-mode="transform"
     position="absolute"
     bordered
@@ -75,7 +77,7 @@ watch(
         <div class="p-4">
           <NButton dashed block @click="handleAdd">
             <template #icon>
-              <SvgIcon icon="ri:close-circle-line" />
+              <img :src="add_chat">
             </template>
             {{ $t('chat.newChatButton') }}
           </NButton>
