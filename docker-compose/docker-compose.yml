@@ -1,4 +1,4 @@
-version: '1'
+version: '3'
 
 services:
   app:
@@ -8,7 +8,7 @@ services:
       - 127.0.0.1:5438:5438
     environment:
       # 二选一
-      OPENAI_API_KEY: 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
+      OPENAI_API_KEY: sk-xx
       # 二选一
       # OPENAI_ACCESS_TOKEN:
 
