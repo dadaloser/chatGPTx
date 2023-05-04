@@ -39,6 +39,9 @@ const prompt = ref<string>('')
 const loading = ref<boolean>(false)
 const inputRef = ref<Ref | null>(null)
 
+// 判断是否在底部
+const isNotAtBottom = ref<boolean>(false)
+
 // 添加PromptStore
 const promptStore = usePromptStore()
 
@@ -211,6 +214,7 @@ async function onConversation() {
   }
 }
 
+// 重新请求回复
 async function onRegenerate(index: number) {
   if (loading.value)
     return
@@ -535,6 +539,15 @@ onUnmounted(() => {
         </div>
       </div>
     </main>
+
+    <div class="sticky bottom-0 left-0 flex justify-center">
+      <NButton v-show="isNotAtBottom" type="primary" @click="scrollToBottom">
+        <template #icon>
+          <SvgIcon icon="ri:stop-circle-line" />
+        </template>
+      </NButton>
+    </div>
+
     <footer :class="footerClass">
       <div class="w-full max-w-screen-xl m-auto">
         <div class="flex items-center justify-between space-x-2">
