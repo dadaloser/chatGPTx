@@ -23,6 +23,9 @@ export function useLanguage() {
       case 'zh-TW':
         setLocale('zh-TW')
         return zhTW
+      case 'ru-RU':
+        setLocale('ru-RU')
+        return zhTW
       default:
         setLocale('zh-CN')
         return zhCN
