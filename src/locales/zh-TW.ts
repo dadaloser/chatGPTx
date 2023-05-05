@@ -47,6 +47,7 @@ export default {
     deleteMessage: '刪除訊息',
     deleteMessageConfirm: '是否刪除此訊息?',
     deleteHistoryConfirm: '確定刪除此紀錄?',
+    clearAll: '清空',
     clearHistoryConfirm: '確定清除紀錄?',
     preview: '預覽',
     showRawText: '顯示原文',
@@ -81,7 +82,7 @@ export default {
     balance: 'API Credit 餘額',
     monthlyUsage: '本月使用量',
     maxTokens: 'Max tokens',
-    gptNickname: 'GPT Nick Name',
+    gptNickname: 'GPT Nickname',
 
   },
   store: {

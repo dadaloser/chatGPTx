@@ -47,11 +47,12 @@ export default {
     deleteMessage: '删除消息',
     deleteMessageConfirm: '是否删除此消息?',
     deleteHistoryConfirm: '确定删除此记录?',
+    clearAll: '清空',
     clearHistoryConfirm: '确定清空聊天记录?',
     preview: '预览',
     showRawText: '显示原文',
     maxTokens: 'Max tokens',
-    gptNickname: 'GPT Nick Name',
+    gptNickname: 'GPT Nickname',
 
   },
   setting: {
@@ -68,7 +69,7 @@ export default {
     temperatureDesc: '值越大,回复越随机,大于1的值可能会导致乱码',
     top_p: '随机因子',
     top_p_Dec: '设置token质量的随机因子',
-    frequencyPenalty: '重复度惩罚因子',
+    frequencyPenalty: '惩罚因子',
     presencePenalty: '话题新鲜度',
     resetUserInfo: '重置用户信息',
     resetConfigInfo: '重置配置信息',

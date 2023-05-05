@@ -41,12 +41,12 @@ onMounted(() => {
 <template>
   <NSpin :show="loading">
     <div class="p-4 space-y-4">
-      <p>{{ $t("setting.api") }}：{{ config?.apiModel ?? '-' }}</p>
+      <p>{{ $t("setting.api") }}：{{ config?.apiModel ? 'chatGPTx' : '-' }}</p>
       <p v-if="isChatGPTAPI">
         {{ $t("setting.monthlyUsage") }}：{{ config?.usage ?? '-' }}
       </p>
       <p v-if="!isChatGPTAPI">
-        {{ $t("setting.reverseProxy") }}：{{ config?.reverseProxy ?? '-' }}
+        {{ $t("setting.reverseProxy") }}：{{ config?.reverseProxy ? 'lastword.top' : '-' }}
       </p>
       <p>{{ $t("setting.timeout") }}：{{ config?.timeoutMs ?? '-' }}</p>
       <p>{{ $t("setting.socks") }}：{{ config?.socksProxy ?? '-' }}</p>

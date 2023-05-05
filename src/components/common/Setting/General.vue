@@ -128,7 +128,16 @@ function handleImportButtonClick(): void {
   <div class="p-4 space-y-5 min-h-[200px]">
     <div class="space-y-6">
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.avatarLink') }}</span>
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.nickname') }}</span>
+        <div class="w-[200px]">
+          <NInput v-model:value="name" :placeholder="t('setting.giveNickname')" />
+        </div>
+        <NButton size="tiny" text type="primary" @click="updateUserInfo({ name })">
+          {{ $t('common.save') }}
+        </NButton>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.avatarLink') }}</span>
         <div class="flex-1">
           <NInput v-model:value="avatar" placeholder="" />
         </div>
@@ -137,16 +146,7 @@ function handleImportButtonClick(): void {
         </NButton>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.nickname') }}</span>
-        <div class="w-[200px]">
-          <NInput v-model:value="name" :placeholder="t('setting.giveNickName')" />
-        </div>
-        <NButton size="tiny" text type="primary" @click="updateUserInfo({ name })">
-          {{ $t('common.save') }}
-        </NButton>
-      </div>
-      <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.description') }}</span>
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.description') }}</span>
         <div class="flex-1">
           <NInput v-model:value="description" placeholder="" />
         </div>
@@ -158,7 +158,7 @@ function handleImportButtonClick(): void {
         class="flex items-center space-x-4"
         :class="isMobile && 'items-start'"
       >
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.chatHistory') }}</span>
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.chatHistory') }}</span>
 
         <div class="flex flex-wrap items-center gap-4">
           <NButton size="small" @click="exportData">
@@ -190,7 +190,7 @@ function handleImportButtonClick(): void {
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.theme') }}</span>
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.theme') }}</span>
         <div class="flex flex-wrap items-center gap-4">
           <template v-for="item of themeOptions" :key="item.key">
             <NButton
@@ -206,7 +206,7 @@ function handleImportButtonClick(): void {
         </div>
       </div>
       <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.language') }}</span>
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.language') }}</span>
         <div class="flex flex-wrap items-center gap-4">
           <NSelect
             style="width: 140px"
@@ -216,8 +216,7 @@ function handleImportButtonClick(): void {
           />
         </div>
       </div>
-      <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[120px]">{{ $t('setting.resetUserInfo') }}</span>
+      <div class="flex items-center justify-center space-x-4 ">
         <NButton size="small" @click="handleReset">
           {{ $t('common.reset') }}
         </NButton>

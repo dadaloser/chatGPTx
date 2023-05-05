@@ -46,6 +46,7 @@ export default {
     deleteMessage: 'Удалить сообщение',
     deleteMessageConfirm: 'Вы уверены, что хотите удалить это сообщение?',
     deleteHistoryConfirm: 'Вы уверены, что хотите очистить эту историю?',
+    clearAll: '清空',
     clearHistoryConfirm: 'Вы уверены, что хотите очистить историю чата?',
     preview: 'Предварительный просмотр',
     showRawText: 'Показать как обычный текст',

@@ -47,6 +47,7 @@ export default {
     deleteMessage: '메시지 삭제',
     deleteMessageConfirm: '이 메시지를 삭제하시겠습니까?',
     deleteHistoryConfirm: '이 기록을 삭제하시겠습니까?',
+    clearAll: '清空',
     clearHistoryConfirm: '채팅 기록을 삭제하시겠습니까?',
     preview: '미리보기',
     showRawText: '원본 텍스트로 보기',
@@ -81,7 +82,7 @@ export default {
     balance: 'API 잔액',
     monthlyUsage: '월 사용량',
     maxTokens: 'Max tokens',
-    gptNickname: 'GPT Nick Name',
+    gptNickname: 'GPT Nickname',
 
   },
   store: {
