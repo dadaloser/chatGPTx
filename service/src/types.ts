@@ -12,6 +12,8 @@ export interface RequestProps {
   user?: string
   nickname?: string
   gptNickname?: string
+  apiKey?: string
+  accessToken?: string
 }
 
 export interface ChatContext {

@@ -29,7 +29,6 @@ export function fetchChatAPIProcess<T = any>(
     onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void },
 ) {
   const settingStore = useSettingStore()
-
   const userStore = useUserStore()
   const authStore = useAuthStore()
 
@@ -52,6 +51,8 @@ export function fetchChatAPIProcess<T = any>(
       user: userStore.userInfo.name, // todo: 要设置唯一的id值,
       nickname: userStore.userInfo.name,
       gptNickname: settingStore.gptNickname,
+      apiKey: settingStore.apiKey,
+      accessToken: settingStore.accessToken,
     }
   }
 
