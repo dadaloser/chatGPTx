@@ -2,20 +2,23 @@
 import { computed, nextTick } from 'vue'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useAppStore, useChatStore } from '@/store'
+import fullscreen from '@/assets/fullscreen.svg'
+import notFullscreen from '@/assets/notFullscreen.svg'
+
+defineProps<Props>()
+
+const emit = defineEmits<Emit>()
 
 interface Props {
   usingContext: boolean
 }
 
 interface Emit {
+  (ev: 'toggleFullscreen'): void
   (ev: 'export'): void
   (ev: 'clearRecord'): void
   (ev: 'toggleUsingContext'): void
 }
-
-defineProps<Props>()
-
-const emit = defineEmits<Emit>()
 
 const appStore = useAppStore()
 const chatStore = useChatStore()
@@ -31,6 +34,10 @@ function onScrollToTop() {
   const scrollRef = document.querySelector('#scrollRef')
   if (scrollRef)
     nextTick(() => scrollRef.scrollTop = 0)
+}
+
+function toggleFullscreen() {
+  emit('toggleFullscreen')
 }
 
 function handleExport() {
@@ -67,6 +74,11 @@ function toggleUsingContext() {
         {{ currentChatHistory?.title ?? '' }}
       </h1>
       <div class="flex items-center space-x-2">
+        <HoverButton @click="toggleFullscreen">
+          <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen, 'text-[#a8071a]': !isFullscreen }">
+            <img :src="isFullscreen ? notFullscreen : fullscreen">
+          </span>
+        </HoverButton>
         <HoverButton @click="handleClear">
           <span class="text-xl text-[#4f555e] dark:text-white">
             <SvgIcon icon="ri:delete-bin-line" />

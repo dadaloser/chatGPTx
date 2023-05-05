@@ -15,6 +15,9 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { useChatStore, usePromptStore } from '@/store'
 import { fetchChatAPIProcess } from '@/api'
 import { t } from '@/locales'
+import fullscreen from '@/assets/fullscreen.svg'
+import notFullscreen from '@/assets/notFullscreen.svg'
+import { useScreenContext } from '@/views/chat/hooks/useScreen'
 
 let controller = new AbortController()
 
@@ -30,6 +33,7 @@ const { isMobile } = useBasicLayout()
 const { addChat, updateChat, updateChatSome, getChatByUuidAndIndex } = useChat()
 const { scrollRef, scrollToBottom, scrollToBottomIfAtBottom } = useScroll()
 const { usingContext, toggleUsingContext } = useUsingContext()
+const { isFullscreen, toggleFullScreen } = useScreenContext()
 const { uuid } = route.params as { uuid: string }
 
 const dataSources = computed(() => chatStore.getChatByUuid(+uuid))
@@ -551,6 +555,12 @@ onUnmounted(() => {
     <footer :class="footerClass">
       <div class="w-full max-w-screen-xl m-auto">
         <div class="flex items-center justify-between space-x-2">
+          <HoverButton v-if="!isMobile" @click="toggleFullScreen">
+            <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen, 'text-[#a8071a]': !isFullscreen }">
+              <img :src="isFullscreen ? notFullscreen : fullscreen">
+            </span>
+          </HoverButton>
+
           <HoverButton v-if="!isMobile" @click="handleClear">
             <span class="text-xl text-[#4f555e] dark:text-white">
               <SvgIcon icon="ri:delete-bin-line" />
