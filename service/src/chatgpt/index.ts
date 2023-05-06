@@ -8,7 +8,7 @@ import fetch from 'node-fetch'
 import { sendResponse } from '../utils'
 import { isNotEmptyString } from '../utils/is'
 import type { ApiModel, ChatContext, ChatGPTUnofficialProxyAPIOptions, ModelConfig } from '../types'
-import type { RequestOptions, SetProxyOptions, UsageResponse } from './types'
+import type { GptConfigOptions, RequestOptions, SetProxyOptions, UsageResponse } from './types'
 
 const { HttpsProxyAgent } = httpsProxyAgent
 
@@ -23,30 +23,38 @@ const ErrorCodeMessage: Record<string, string> = {
   500: '[OpenAI] 服务器繁忙，请稍后再试 | Internal Server Error',
 }
 
+// todo: 设置自由的超时时间
 const timeoutMs: number = !isNaN(+process.env.TIMEOUT_MS) ? +process.env.TIMEOUT_MS : 100 * 1000
 const disableDebug: boolean = process.env.OPENAI_API_DISABLE_DEBUG === 'true'
 
 let apiModel: ApiModel
 const model = isNotEmptyString(process.env.OPENAI_API_MODEL) ? process.env.OPENAI_API_MODEL : 'gpt-3.5-turbo'
 
-if (!isNotEmptyString(process.env.OPENAI_API_KEY) && !isNotEmptyString(process.env.OPENAI_ACCESS_TOKEN))
-  throw new Error('Missing OPENAI_API_KEY or OPENAI_ACCESS_TOKEN environment variable')
+let apiKeyDef: string
+let accessTokenDef: string
+
+// if (!isNotEmptyString(process.env.OPENAI_API_KEY) && !isNotEmptyString(process.env.OPENAI_ACCESS_TOKEN))
+//  throw new Error('Missing OPENAI_API_KEY or OPENAI_ACCESS_TOKEN environment variable')
 
 let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
 
+// 初始化配置
 (async () => {
   // More Info: https://github.com/transitive-bullshit/chatgpt-api
-
+/*
+  // 使用apiKey
   if (isNotEmptyString(process.env.OPENAI_API_KEY)) {
     const OPENAI_API_BASE_URL = process.env.OPENAI_API_BASE_URL
 
     const options: ChatGPTAPIOptions = {
+      // todo: 设计自由填入
       apiKey: process.env.OPENAI_API_KEY,
+      // todo: 自由选择
       completionParams: { model },
       debug: !disableDebug,
     }
 
-    // increase max token limit if use gpt-4
+    // todo: increase max token limit if use gpt-4
     if (model.toLowerCase().includes('gpt-4')) {
       // if use 32k model
       if (model.toLowerCase().includes('32k')) {
@@ -68,9 +76,10 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
     apiModel = 'ChatGPTAPI'
   }
   else {
+    // 使用代理
     const options: ChatGPTUnofficialProxyAPIOptions = {
       accessToken: process.env.OPENAI_ACCESS_TOKEN,
-      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'https://bypass.churchless.tech/api/conversation',
+      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'http://chat-api.lastword.top/api/conversation',
       model,
       debug: !disableDebug,
     }
@@ -79,30 +88,93 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
 
     api = new ChatGPTUnofficialProxyAPI({ ...options })
     apiModel = 'ChatGPTUnofficialProxyAPI'
-  }
+  } */
+
+  gptConfig({ apiKey: process.env.OPENAI_API_KEY, model })
 })()
 
+async function gptConfig(gptConfigOptions: GptConfigOptions) {
+  const { temperature, top_p, frequency_penalty, presence_penalty, model, user, nickname, gptNickname, apiKey, accessToken } = gptConfigOptions
+
+  // 使用apiKey
+  if (isNotEmptyString(gptConfigOptions.apiKey)) {
+    const OPENAI_API_BASE_URL = process.env.OPENAI_API_BASE_URL
+
+    const options: ChatGPTAPIOptions = {
+      // todo: 设计自由填入
+      apiKey: gptConfigOptions.apiKey,
+      // todo: 自由选择
+      completionParams: { model: gptConfigOptions.model },
+      debug: !disableDebug,
+    }
+
+    // todo: increase max token limit if use gpt-4
+    if (model.toLowerCase().includes('gpt-4')) {
+      // if use 32k model
+      if (model.toLowerCase().includes('32k')) {
+        options.maxModelTokens = 32768
+        options.maxResponseTokens = 8192
+      }
+      else {
+        options.maxModelTokens = 8192
+        options.maxResponseTokens = 2048
+      }
+    }
+
+    if (isNotEmptyString(OPENAI_API_BASE_URL))
+      options.apiBaseUrl = `${OPENAI_API_BASE_URL}/v1`
+
+    setupProxy(options)
+
+    api = new ChatGPTAPI({ ...options })
+    apiModel = 'ChatGPTAPI'
+  }
+  else {
+    // 使用代理
+    const options: ChatGPTUnofficialProxyAPIOptions = {
+      accessToken: gptConfigOptions.accessToken,
+      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'http://chat-api.lastword.top/api/conversation',
+      model: gptConfigOptions.model,
+      debug: !disableDebug,
+    }
+
+    setupProxy(options)
+
+    api = new ChatGPTUnofficialProxyAPI({ ...options })
+    apiModel = 'ChatGPTUnofficialProxyAPI'
+  }
+}
+
+// todo: user存用户id
+// api请求,得到响应的数据
 async function chatReplyProcess(options: RequestOptions) {
-  const { message, lastContext, process, systemMessage, temperature, top_p } = options
+  const { message, lastContext, process, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickname, gptNickname, apiKey, accessToken } = options
   try {
     let options: SendMessageOptions = { timeoutMs }
 
     if (apiModel === 'ChatGPTAPI') {
       if (isNotEmptyString(systemMessage))
         options.systemMessage = systemMessage
-      options.completionParams = { model, temperature, top_p }
+
+      options.name = nickname
+
+      options.completionParams = { model, temperature, top_p, frequency_penalty, presence_penalty, user }
     }
 
+    // api模式下要主动绑定父文本的id
     if (lastContext != null) {
       if (apiModel === 'ChatGPTAPI')
         options.parentMessageId = lastContext.parentMessageId
-      else
-        options = { ...lastContext }
+
+      else options = { ...lastContext }
     }
 
+    // 获取的是当前响应的数据
     const response = await api.sendMessage(message, {
       ...options,
       onProgress: (partialResponse) => {
+        // 设置响应的gpt名
+        partialResponse.name = isNotEmptyString(gptNickname) ? gptNickname : 'chatGPTxDef'
         process?.(partialResponse)
       },
     })
@@ -181,6 +253,7 @@ async function chatConfig() {
   })
 }
 
+// 设置代理
 function setupProxy(options: SetProxyOptions) {
   if (isNotEmptyString(process.env.SOCKS_PROXY_HOST) && isNotEmptyString(process.env.SOCKS_PROXY_PORT)) {
     const agent = new SocksProxyAgent({
@@ -209,6 +282,7 @@ function setupProxy(options: SetProxyOptions) {
   }
 }
 
+// 获取当前模型
 function currentModel(): ApiModel {
   return apiModel
 }

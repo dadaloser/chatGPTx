@@ -4,6 +4,8 @@ import enUS from './en-US'
 import koKR from './ko-KR'
 import zhCN from './zh-CN'
 import zhTW from './zh-TW'
+import jaJP from './ja-JP'
+import ruRU from './ru-RU'
 import { useAppStoreWithOut } from '@/store/modules/app'
 import type { Language } from '@/store/modules/app/helper'
 
@@ -20,6 +22,8 @@ const i18n = createI18n({
     'ko-KR': koKR,
     'zh-CN': zhCN,
     'zh-TW': zhTW,
+    'ja-JP': jaJP,
+    'ru-RU': ruRU,
   },
 })
 

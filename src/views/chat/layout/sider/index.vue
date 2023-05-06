@@ -4,9 +4,15 @@ import { computed, ref, watch } from 'vue'
 import { NButton, NLayoutSider } from 'naive-ui'
 import List from './List.vue'
 import Footer from './Footer.vue'
+import { useScroll } from '@/views/chat/hooks/useScroll'
 import { useAppStore, useChatStore } from '@/store'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { PromptStore } from '@/components/common'
+import { debounce } from '@/utils/functions/debounce'
+import add_chat from '@/assets/add_chat.svg'
+import clear_chat from '@/assets/clear_chat.svg'
+
+const { scrollRef, scrollToTop } = useScroll()
 
 const appStore = useAppStore()
 const chatStore = useChatStore()
@@ -16,10 +22,29 @@ const show = ref(false)
 
 const collapsed = computed(() => appStore.siderCollapsed)
 
-function handleAdd() {
+const handleDeleteDebounce = debounce(clearAllChat, 600)
+
+function handleAddNewChat() {
+  // 滚动到顶部
+  scrollToTop()
+
   chatStore.addHistory({ title: 'New Chat', uuid: Date.now(), isEdit: false })
-  if (isMobile.value)
-    appStore.setSiderCollapsed(true)
+  // 不需要点击后关闭
+  // if (isMobile.value)
+  //  appStore.setSiderCollapsed(true)
+}
+
+// 清除所有的聊天对话框
+function clearAllChat() {
+  chatStore.$state.history.forEach((element, index) => {
+    chatStore.deleteHistory(index)
+  })
+  chatStore.$state.history.splice(0, chatStore.$state.history.length)
+  // 移除所有的缓存记录
+  // localStorage.removeItem('chatStorage')
+
+  // 添加一个新的对话框
+  handleAddNewChat()
 }
 
 function handleUpdateCollapsed() {
@@ -45,6 +70,7 @@ const mobileSafeArea = computed(() => {
   return {}
 })
 
+// 监控布局
 watch(
   isMobile,
   (val) => {
@@ -62,7 +88,7 @@ watch(
     :collapsed="collapsed"
     :collapsed-width="0"
     :width="260"
-    :show-trigger="isMobile ? false : 'arrow-circle'"
+    :show-trigger="isMobile ? false : 'bar'"
     collapse-mode="transform"
     position="absolute"
     bordered
@@ -71,13 +97,26 @@ watch(
   >
     <div class="flex flex-col h-full" :style="mobileSafeArea">
       <main class="flex flex-col flex-1 min-h-0">
-        <div class="p-4">
-          <NButton dashed block @click="handleAdd">
+        <div class="flex p-4  justify-content-between space-x-2">
+          <NButton class="flex-1 " dashed block @click="handleAddNewChat">
+            <template #icon>
+              <img :src="add_chat">
+            </template>
             {{ $t('chat.newChatButton') }}
           </NButton>
+
+          <NButton class="flex-1" dashed block @click="handleDeleteDebounce">
+            <template #icon>
+              <img :src="clear_chat">
+            </template>
+            {{ $t('chat.clearAll') }}
+          </NButton>
         </div>
-        <div class="flex-1 min-h-0 pb-4 overflow-hidden">
-          <List />
+
+        <div id="scrollRef" ref="scrollRef" class="h-full overflow-hidden overflow-y-auto">
+          <div class="flex-1 min-h-0 pb-4 overflow-hidden">
+            <List />
+          </div>
         </div>
         <div class="p-4">
           <NButton block @click="show = true">
@@ -89,7 +128,7 @@ watch(
     </div>
   </NLayoutSider>
   <template v-if="isMobile">
-    <div v-show="!collapsed" class="fixed inset-0 z-40 bg-black/40" @click="handleUpdateCollapsed" />
+    <div v-show="!collapsed" class="fixed inset-0 z-40 w-full h-full bg-black/40" @click="handleUpdateCollapsed" />
   </template>
   <PromptStore v-model:visible="show" />
 </template>

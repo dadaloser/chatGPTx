@@ -3,18 +3,23 @@ import { computed, nextTick } from 'vue'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useAppStore, useChatStore } from '@/store'
 
+defineProps<Props>()
+
+const emit = defineEmits<Emit>()
+
 interface Props {
+  isFullscreen: boolean
+
   usingContext: boolean
 }
 
 interface Emit {
   (ev: 'export'): void
+  (ev: 'clearRecord'): void
   (ev: 'toggleUsingContext'): void
+  (ev: 'toggleFullscreen'): void
+
 }
-
-defineProps<Props>()
-
-const emit = defineEmits<Emit>()
 
 const appStore = useAppStore()
 const chatStore = useChatStore()
@@ -32,8 +37,16 @@ function onScrollToTop() {
     nextTick(() => scrollRef.scrollTop = 0)
 }
 
+function toggleFullscreen() {
+  emit('toggleFullscreen')
+}
+
 function handleExport() {
   emit('export')
+}
+
+function handleClear() {
+  emit('clearRecord')
 }
 
 function toggleUsingContext() {
@@ -51,7 +64,7 @@ function toggleUsingContext() {
           class="flex items-center justify-center w-11 h-11"
           @click="handleUpdateCollapsed"
         >
-          <SvgIcon v-if="collapsed" class="text-2xl" icon="ri:align-justify" />
+          <SvgIcon v-if="collapsed" class="text-2xl" icon="icon-park-outline:expand-left" />
           <SvgIcon v-else class="text-2xl" icon="ri:align-right" />
         </button>
       </div>
@@ -62,14 +75,25 @@ function toggleUsingContext() {
         {{ currentChatHistory?.title ?? '' }}
       </h1>
       <div class="flex items-center space-x-2">
-        <HoverButton @click="toggleUsingContext">
-          <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
-            <SvgIcon icon="ri:chat-history-line" />
+        <HoverButton @click="toggleFullscreen">
+          <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen }">
+            <SvgIcon v-if="isFullscreen" icon="ic:round-fullscreen-exit" />
+            <SvgIcon v-else icon="ic:round-fullscreen" />
+          </span>
+        </HoverButton>
+        <HoverButton @click="handleClear">
+          <span class="text-xl text-[#4f555e] dark:text-white">
+            <SvgIcon icon="ri:delete-bin-line" />
           </span>
         </HoverButton>
         <HoverButton @click="handleExport">
           <span class="text-xl text-[#4f555e] dark:text-white">
             <SvgIcon icon="ri:download-2-line" />
+          </span>
+        </HoverButton>
+        <HoverButton @click="toggleUsingContext">
+          <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
+            <SvgIcon icon="ri:chat-history-line" />
           </span>
         </HoverButton>
       </div>

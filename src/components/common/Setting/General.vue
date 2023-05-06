@@ -57,7 +57,10 @@ const languageOptions: { label: string; key: Language; value: Language }[] = [
   { label: '简体中文', key: 'zh-CN', value: 'zh-CN' },
   { label: '繁體中文', key: 'zh-TW', value: 'zh-TW' },
   { label: 'English', key: 'en-US', value: 'en-US' },
+  { label: '日本語', key: 'ja-JP', value: 'ja-JP' },
   { label: '한국어', key: 'ko-KR', value: 'ko-KR' },
+  { label: 'Русский язык', key: 'ru-RU', value: 'ru-RU' },
+
 ]
 
 function updateUserInfo(options: Partial<UserInfo>) {
@@ -125,20 +128,20 @@ function handleImportButtonClick(): void {
   <div class="p-4 space-y-5 min-h-[200px]">
     <div class="space-y-6">
       <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.nickname') }}</span>
+        <div class="w-[200px]">
+          <NInput v-model:value="name" :placeholder="t('setting.nicknamePlaceholder')" />
+        </div>
+        <NButton size="tiny" text type="primary" @click="updateUserInfo({ name })">
+          {{ $t('common.save') }}
+        </NButton>
+      </div>
+      <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[100px]">{{ $t('setting.avatarLink') }}</span>
         <div class="flex-1">
           <NInput v-model:value="avatar" placeholder="" />
         </div>
         <NButton size="tiny" text type="primary" @click="updateUserInfo({ avatar })">
-          {{ $t('common.save') }}
-        </NButton>
-      </div>
-      <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.name') }}</span>
-        <div class="w-[200px]">
-          <NInput v-model:value="name" placeholder="" />
-        </div>
-        <NButton size="tiny" text type="primary" @click="updateUserInfo({ name })">
           {{ $t('common.save') }}
         </NButton>
       </div>
@@ -213,8 +216,7 @@ function handleImportButtonClick(): void {
           />
         </div>
       </div>
-      <div class="flex items-center space-x-4">
-        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.resetUserInfo') }}</span>
+      <div class="flex items-center justify-center space-x-4 ">
         <NButton size="small" @click="handleReset">
           {{ $t('common.reset') }}
         </NButton>

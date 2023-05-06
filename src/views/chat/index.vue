@@ -8,9 +8,9 @@ import html2canvas from 'html2canvas'
 import { Message } from './components'
 import { useScroll } from './hooks/useScroll'
 import { useChat } from './hooks/useChat'
-import { useCopyCode } from './hooks/useCopyCode'
 import { useUsingContext } from './hooks/useUsingContext'
 import HeaderComponent from './components/Header/index.vue'
+import { useScreenContext } from '@/views/chat/hooks/useScreen'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { useChatStore, usePromptStore } from '@/store'
@@ -27,13 +27,11 @@ const ms = useMessage()
 
 const chatStore = useChatStore()
 
-useCopyCode()
-
 const { isMobile } = useBasicLayout()
 const { addChat, updateChat, updateChatSome, getChatByUuidAndIndex } = useChat()
 const { scrollRef, scrollToBottom, scrollToBottomIfAtBottom } = useScroll()
 const { usingContext, toggleUsingContext } = useUsingContext()
-
+const { isFullscreen, toggleFullScreen } = useScreenContext()
 const { uuid } = route.params as { uuid: string }
 
 const dataSources = computed(() => chatStore.getChatByUuid(+uuid))
@@ -42,6 +40,9 @@ const conversationList = computed(() => dataSources.value.filter(item => (!item.
 const prompt = ref<string>('')
 const loading = ref<boolean>(false)
 const inputRef = ref<Ref | null>(null)
+
+// 判断是否在底部
+const isNotAtBottom = ref<boolean>(false)
 
 // 添加PromptStore
 const promptStore = usePromptStore()
@@ -55,10 +56,12 @@ dataSources.value.forEach((item, index) => {
     updateChatSome(+uuid, index, { loading: false })
 })
 
+// 前端发送消息
 function handleSubmit() {
   onConversation()
 }
 
+// 对话处理
 async function onConversation() {
   let message = prompt.value
 
@@ -81,17 +84,22 @@ async function onConversation() {
       requestOptions: { prompt: message, options: null },
     },
   )
+  // 滚动到底部
   scrollToBottom()
 
+  // 开始等待响应
   loading.value = true
   prompt.value = ''
 
+  // 对话请求
   let options: Chat.ConversationRequest = {}
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
+  // 连续对话
   if (lastContext && usingContext.value)
     options = { ...lastContext }
 
+  // 添加一条记录
   addChat(
     +uuid,
     {
@@ -104,6 +112,7 @@ async function onConversation() {
       requestOptions: { prompt: message, options: { ...options } },
     },
   )
+  // 持续滚动到底部
   scrollToBottom()
 
   try {
@@ -186,6 +195,7 @@ async function onConversation() {
       return
     }
 
+    // 更新记录
     updateChat(
       +uuid,
       dataSources.value.length - 1,
@@ -206,6 +216,7 @@ async function onConversation() {
   }
 }
 
+// 重新请求回复
 async function onRegenerate(index: number) {
   if (loading.value)
     return
@@ -389,6 +400,22 @@ function handleClear() {
   })
 }
 
+// todo: 添加模型选择
+function handleChangeLanguageModel() {
+  if (loading.value)
+    return
+
+  dialog.warning({
+    title: t('chat.clearChat'),
+    content: t('chat.exportImage'),
+    positiveText: t('common.yes'),
+    negativeText: t('common.no'),
+    onPositiveClick: () => {
+      chatStore.clearChatByUuid(+uuid)
+    },
+  })
+}
+
 function handleEnter(event: KeyboardEvent) {
   if (!isMobile.value) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -411,7 +438,7 @@ function handleStop() {
   }
 }
 
-// 可优化部分
+// todo: 可优化部分
 // 搜索选项计算，这里使用value作为索引项，所以当出现重复value时渲染异常(多项同时出现选中效果)
 // 理想状态下其实应该是key作为索引项,但官方的renderOption会出现问题，所以就需要value反renderLabel实现
 const searchOptions = computed(() => {
@@ -471,8 +498,11 @@ onUnmounted(() => {
     <HeaderComponent
       v-if="isMobile"
       :using-context="usingContext"
+      :is-fullscreen="isFullscreen"
       @export="handleExport"
+      @clear-record="handleClear"
       @toggle-using-context="toggleUsingContext"
+      @toggle-fullscreen="toggleFullScreen"
     />
     <main class="flex-1 overflow-hidden">
       <div id="scrollRef" ref="scrollRef" class="h-full overflow-hidden overflow-y-auto">
@@ -513,10 +543,26 @@ onUnmounted(() => {
         </div>
       </div>
     </main>
+
+    <div class="sticky bottom-0 left-0 flex justify-center">
+      <NButton v-show="isNotAtBottom" type="primary" @click="scrollToBottom">
+        <template #icon>
+          <SvgIcon icon="ri:stop-circle-line" />
+        </template>
+      </NButton>
+    </div>
+
     <footer :class="footerClass">
       <div class="w-full max-w-screen-xl m-auto">
         <div class="flex items-center justify-between space-x-2">
-          <HoverButton @click="handleClear">
+          <HoverButton v-if="!isMobile" @click="toggleFullScreen">
+            <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen }">
+              <SvgIcon v-if="isFullscreen" icon="ic:round-fullscreen-exit" />
+              <SvgIcon v-else icon="ic:round-fullscreen" />
+            </span>
+          </HoverButton>
+
+          <HoverButton v-if="!isMobile" @click="handleClear">
             <span class="text-xl text-[#4f555e] dark:text-white">
               <SvgIcon icon="ri:delete-bin-line" />
             </span>
@@ -529,6 +575,12 @@ onUnmounted(() => {
           <HoverButton v-if="!isMobile" @click="toggleUsingContext">
             <span class="text-xl" :class="{ 'text-[#4b9e5f]': usingContext, 'text-[#a8071a]': !usingContext }">
               <SvgIcon icon="ri:chat-history-line" />
+            </span>
+          </HoverButton>
+          <HoverButton @click="handleChangeLanguageModel">
+            <span class="text-xl text-[#4f555e] dark:text-white">
+              <SvgIcon icon="icon-park-twotone:add-pic" />
+
             </span>
           </HoverButton>
           <NAutoComplete v-model:value="prompt" :options="searchOptions" :render-label="renderOption">

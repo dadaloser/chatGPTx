@@ -1,6 +1,6 @@
 import type { AxiosProgressEvent, GenericAbortSignal } from 'axios'
 import { post } from '@/utils/request'
-import { useAuthStore, useSettingStore } from '@/store'
+import { useAuthStore, useSettingStore, useUserStore } from '@/store'
 
 export function fetchChatAPI<T = any>(
   prompt: string,
@@ -20,6 +20,7 @@ export function fetchChatConfig<T = any>() {
   })
 }
 
+// 实际获取api数据
 export function fetchChatAPIProcess<T = any>(
   params: {
     prompt: string
@@ -28,19 +29,30 @@ export function fetchChatAPIProcess<T = any>(
     onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void },
 ) {
   const settingStore = useSettingStore()
+  const userStore = useUserStore()
   const authStore = useAuthStore()
 
+  // 构建参数列表
   let data: Record<string, any> = {
     prompt: params.prompt,
     options: params.options,
   }
 
+  // 获取配置数据,补齐
   if (authStore.isChatGPTAPI) {
     data = {
       ...data,
       systemMessage: settingStore.systemMessage,
       temperature: settingStore.temperature,
       top_p: settingStore.top_p,
+      frequency_penalty: settingStore.frequency_penalty,
+      presence_penalty: settingStore.presence_penalty,
+      model: settingStore.language_model,
+      user: userStore.userInfo.name, // todo: 要设置唯一的id值,
+      nickname: userStore.userInfo.name,
+      gptNickname: settingStore.gptNickname,
+      apiKey: settingStore.apiKey,
+      accessToken: settingStore.accessToken,
     }
   }
 

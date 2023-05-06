@@ -1,11 +1,12 @@
-
-cd ./service
-nohup pnpm start > service.log &
-echo "Start service complete!"
-
-
-cd ..
-echo "" > front.log
-nohup pnpm dev > front.log &
+pnpm bootstrap
+echo "" > ../front.log
+nohup pnpm dev > ../front.log 2>&1 & 
+echo $! > ../front.pid
 echo "Start front complete!"
-tail -f front.log
+ 
+# sudo ss -ntlp | grep LISTEN        
+#mac: lsof -i tcp:8081
+
+
+
+

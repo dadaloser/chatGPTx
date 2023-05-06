@@ -19,22 +19,34 @@ app.all('*', (_, res, next) => {
   next()
 })
 
+// chat请求,前端的数据填入到响应的chatReplyProcess
 router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {}, systemMessage, temperature, top_p } = req.body as RequestProps
+    const { prompt, options = {}, systemMessage, temperature, top_p, frequency_penalty, presence_penalty, model, user, nickname, gptNickname, apiKey, accessToken } = req.body as RequestProps
+
     let firstChunk = true
+
+    // 实际api的请求调用
     await chatReplyProcess({
       message: prompt,
       lastContext: options,
-      process: (chat: ChatMessage) => {
-        res.write(firstChunk ? JSON.stringify(chat) : `\n${JSON.stringify(chat)}`)
+      process: (chatMessage: ChatMessage) => {
+        res.write(firstChunk ? JSON.stringify(chatMessage) : `\n${JSON.stringify(chatMessage)}`)
         firstChunk = false
       },
       systemMessage,
       temperature,
       top_p,
+      frequency_penalty,
+      presence_penalty,
+      model,
+      user,
+      nickname,
+      gptNickname,
+      apiKey,
+      accessToken,
     })
   }
   catch (error) {
@@ -45,6 +57,7 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   }
 })
 
+// 配置
 router.post('/config', auth, async (req, res) => {
   try {
     const response = await chatConfig()
@@ -55,6 +68,7 @@ router.post('/config', auth, async (req, res) => {
   }
 })
 
+// 会话
 router.post('/session', async (req, res) => {
   try {
     const AUTH_SECRET_KEY = process.env.AUTH_SECRET_KEY
@@ -66,6 +80,7 @@ router.post('/session', async (req, res) => {
   }
 })
 
+// 验证秘钥
 router.post('/verify', async (req, res) => {
   try {
     const { token } = req.body as { token: string }
@@ -86,4 +101,4 @@ app.use('', router)
 app.use('/api', router)
 app.set('trust proxy', 1)
 
-app.listen(3002, () => globalThis.console.log('Server is running on port 3002'))
+app.listen(5438, () => globalThis.console.log('Server is running on port 5438'))
