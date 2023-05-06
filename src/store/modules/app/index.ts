@@ -26,11 +26,6 @@ export const useAppStore = defineStore('app-store', {
     recordState() {
       setLocalSetting(this.$state)
     },
-
-    setFullscreen(fullscreen: boolean) {
-      this.fullscreen = fullscreen
-      this.recordState()
-    },
   },
 })
 

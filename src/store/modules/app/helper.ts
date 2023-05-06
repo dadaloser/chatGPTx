@@ -10,11 +10,10 @@ export interface AppState {
   siderCollapsed: boolean
   theme: Theme
   language: Language
-  fullscreen: boolean
 }
 
 export function defaultSetting(): AppState {
-  return { siderCollapsed: false, theme: 'light', language: 'zh-CN', fullscreen: false }
+  return { siderCollapsed: false, theme: 'light', language: 'zh-CN' }
 }
 
 export function getLocalSetting(): AppState {

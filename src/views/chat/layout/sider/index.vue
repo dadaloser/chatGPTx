@@ -10,6 +10,7 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { PromptStore } from '@/components/common'
 import { debounce } from '@/utils/functions/debounce'
 import add_chat from '@/assets/add_chat.svg'
+import clear_chat from '@/assets/clear_chat.svg'
 
 const { scrollRef, scrollToTop } = useScroll()
 
@@ -106,7 +107,7 @@ watch(
 
           <NButton class="flex-1" dashed block @click="handleDeleteDebounce">
             <template #icon>
-              <img :src="add_chat">
+              <img :src="clear_chat">
             </template>
             {{ $t('chat.clearAll') }}
           </NButton>

@@ -10,14 +10,12 @@ import { useScroll } from './hooks/useScroll'
 import { useChat } from './hooks/useChat'
 import { useUsingContext } from './hooks/useUsingContext'
 import HeaderComponent from './components/Header/index.vue'
+import { useScreenContext } from '@/views/chat/hooks/useScreen'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { useChatStore, usePromptStore } from '@/store'
 import { fetchChatAPIProcess } from '@/api'
 import { t } from '@/locales'
-import fullscreen from '@/assets/fullscreen.svg'
-import notFullscreen from '@/assets/notFullscreen.svg'
-import { useScreenContext } from '@/views/chat/hooks/useScreen'
 
 let controller = new AbortController()
 
@@ -500,9 +498,11 @@ onUnmounted(() => {
     <HeaderComponent
       v-if="isMobile"
       :using-context="usingContext"
+      :is-fullscreen="isFullscreen"
       @export="handleExport"
       @clear-record="handleClear"
       @toggle-using-context="toggleUsingContext"
+      @toggle-fullscreen="toggleFullScreen"
     />
     <main class="flex-1 overflow-hidden">
       <div id="scrollRef" ref="scrollRef" class="h-full overflow-hidden overflow-y-auto">
@@ -556,8 +556,9 @@ onUnmounted(() => {
       <div class="w-full max-w-screen-xl m-auto">
         <div class="flex items-center justify-between space-x-2">
           <HoverButton v-if="!isMobile" @click="toggleFullScreen">
-            <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen, 'text-[#a8071a]': !isFullscreen }">
-              <img :src="isFullscreen ? notFullscreen : fullscreen">
+            <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen }">
+              <SvgIcon v-if="isFullscreen" icon="ic:round-fullscreen-exit" />
+              <SvgIcon v-else icon="ic:round-fullscreen" />
             </span>
           </HoverButton>
 

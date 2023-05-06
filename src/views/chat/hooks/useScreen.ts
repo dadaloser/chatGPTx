@@ -1,21 +1,15 @@
-import { computed } from 'vue'
-import { useAppStore } from '@/store'
+import { ref } from 'vue'
 
 export function useScreenContext() {
-  const appStore = useAppStore()
-  const isFullscreen = computed<boolean>(() => appStore.fullscreen)
+  const isFullscreen = ref(false)
 
   function toggleFullScreen() {
-    if (!isFullscreen.value) {
-      document.documentElement.requestFullscreen().then((r) => {
-      })
-    }
-    else {
-      document.exitFullscreen().then((r) => {
-      })
-    }
+    if (!isFullscreen.value)
+      document.documentElement.requestFullscreen()
+    else
+      document.exitFullscreen()
 
-    appStore.setFullscreen(!isFullscreen.value)
+    isFullscreen.value = !isFullscreen.value
   }
 
   return {

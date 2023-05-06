@@ -43,7 +43,7 @@ function handleReset() {
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[100px]">{{ $t('setting.gptNickname') }}</span>
         <div class="w-[200px]">
-          <NInput v-model:value="gptNickname" placeholder="" />
+          <NInput v-model:value="gptNickname" :placeholder="t('setting.gptNicknamePlaceholder')" />
         </div>
       </div>
       <div class="flex items-center space-x-4">
@@ -70,7 +70,7 @@ function handleReset() {
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[100px]">{{ $t('setting.apiKey') }}</span>
         <div class="flex-1">
-          <NInput v-model:value="apiKey" type="password" placeholder="apiKey" />
+          <NInput v-model:value="apiKey" type="password" placeholder="Api Key" />
         </div>
       </div>
       <div class="flex items-center space-x-4">

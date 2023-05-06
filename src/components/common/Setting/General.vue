@@ -130,7 +130,7 @@ function handleImportButtonClick(): void {
       <div class="flex items-center space-x-4">
         <span class="flex-shrink-0 w-[100px]">{{ $t('setting.nickname') }}</span>
         <div class="w-[200px]">
-          <NInput v-model:value="name" :placeholder="t('setting.giveNickname')" />
+          <NInput v-model:value="name" :placeholder="t('setting.nicknamePlaceholder')" />
         </div>
         <NButton size="tiny" text type="primary" @click="updateUserInfo({ name })">
           {{ $t('common.save') }}

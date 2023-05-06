@@ -2,22 +2,23 @@
 import { computed, nextTick } from 'vue'
 import { HoverButton, SvgIcon } from '@/components/common'
 import { useAppStore, useChatStore } from '@/store'
-import fullscreen from '@/assets/fullscreen.svg'
-import notFullscreen from '@/assets/notFullscreen.svg'
 
 defineProps<Props>()
 
 const emit = defineEmits<Emit>()
 
 interface Props {
+  isFullscreen: boolean
+
   usingContext: boolean
 }
 
 interface Emit {
-  (ev: 'toggleFullscreen'): void
   (ev: 'export'): void
   (ev: 'clearRecord'): void
   (ev: 'toggleUsingContext'): void
+  (ev: 'toggleFullscreen'): void
+
 }
 
 const appStore = useAppStore()
@@ -75,8 +76,9 @@ function toggleUsingContext() {
       </h1>
       <div class="flex items-center space-x-2">
         <HoverButton @click="toggleFullscreen">
-          <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen, 'text-[#a8071a]': !isFullscreen }">
-            <img :src="isFullscreen ? notFullscreen : fullscreen">
+          <span class="text-xl" :class="{ 'text-[#4b9e5f]': isFullscreen }">
+            <SvgIcon v-if="isFullscreen" icon="ic:round-fullscreen-exit" />
+            <SvgIcon v-else icon="ic:round-fullscreen" />
           </span>
         </HoverButton>
         <HoverButton @click="handleClear">
