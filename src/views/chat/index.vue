@@ -41,9 +41,7 @@ const prompt = ref<string>('')
 const loading = ref<boolean>(false)
 const inputRef = ref<Ref | null>(null)
 
-// 判断是否在底部
 const isNotAtBottom = ref<boolean>(false)
-
 // 添加PromptStore
 const promptStore = usePromptStore()
 
@@ -438,6 +436,11 @@ function handleStop() {
   }
 }
 
+function handleScroll() {
+  if (scrollRef.value)
+    isNotAtBottom.value = (scrollRef.value.scrollHeight - scrollRef.value.scrollTop) !== scrollRef?.value?.clientHeight
+}
+
 // todo: 可优化部分
 // 搜索选项计算，这里使用value作为索引项，所以当出现重复value时渲染异常(多项同时出现选中效果)
 // 理想状态下其实应该是key作为索引项,但官方的renderOption会出现问题，所以就需要value反renderLabel实现
@@ -505,7 +508,7 @@ onUnmounted(() => {
       @toggle-fullscreen="toggleFullScreen"
     />
     <main class="flex-1 overflow-hidden">
-      <div id="scrollRef" ref="scrollRef" class="h-full overflow-hidden overflow-y-auto">
+      <div id="scrollRef" ref="scrollRef" class="h-full overflow-hidden overflow-y-auto" @scroll="handleScroll">
         <div
           id="image-wrapper"
           class="w-full max-w-screen-xl m-auto dark:bg-[#101014]"
@@ -542,15 +545,15 @@ onUnmounted(() => {
           </template>
         </div>
       </div>
-    </main>
 
-    <div class="sticky bottom-0 left-0 flex justify-center">
-      <NButton v-show="isNotAtBottom" type="primary" @click="scrollToBottom">
-        <template #icon>
-          <SvgIcon icon="ri:stop-circle-line" />
-        </template>
-      </NButton>
-    </div>
+      <div v-if="isNotAtBottom" class="cursor-pointer absolute right-6 bottom-[124px] md:bottom-[60px] z-10 rounded-full border border-gray-200 bg-gray-50 text-gray-600 dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
+        <NButton :circle="true" type="primary" @click="scrollToBottom">
+          <template #icon>
+            <SvgIcon icon="material-symbols:keyboard-double-arrow-down-rounded" />
+          </template>
+        </NButton>
+      </div>
+    </main>
 
     <footer :class="footerClass">
       <div class="w-full max-w-screen-xl m-auto">

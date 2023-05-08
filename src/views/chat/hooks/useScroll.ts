@@ -25,6 +25,7 @@ export function useScroll(): ScrollReturn {
       scrollRef.value.scrollTop = 0
   }
 
+  // 用于动态滚动
   const scrollToBottomIfAtBottom = async () => {
     await nextTick()
     if (scrollRef.value) {
