@@ -438,7 +438,8 @@ function handleStop() {
 
 function handleScroll() {
   if (scrollRef.value)
-    isNotAtBottom.value = (scrollRef.value.scrollHeight - scrollRef.value.scrollTop) !== scrollRef?.value?.clientHeight
+
+    isNotAtBottom.value = (scrollRef.value.scrollHeight - scrollRef.value.scrollTop) !== scrollRef.value.clientHeight
 }
 
 // todo: 可优化部分
@@ -546,8 +547,8 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <div v-if="isNotAtBottom" class="cursor-pointer absolute right-6 bottom-[124px] md:bottom-[60px] z-10 rounded-full border border-gray-200 bg-gray-50 text-gray-600 dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
-        <NButton :circle="true" type="primary" @click="scrollToBottom">
+      <div class="cursor-pointer absolute right-6 bottom-[124px] md:bottom-[60px] z-10 rounded-full border border-gray-200 bg-gray-50 text-gray-600 dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
+        <NButton v-if="isNotAtBottom" :circle="true" type="primary" @click="scrollToBottom">
           <template #icon>
             <SvgIcon icon="material-symbols:keyboard-double-arrow-down-rounded" />
           </template>
