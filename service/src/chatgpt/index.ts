@@ -30,11 +30,8 @@ const disableDebug: boolean = process.env.OPENAI_API_DISABLE_DEBUG === 'true'
 let apiModel: ApiModel
 const model = isNotEmptyString(process.env.OPENAI_API_MODEL) ? process.env.OPENAI_API_MODEL : 'gpt-3.5-turbo'
 
-let apiKeyDef: string
-let accessTokenDef: string
-
-// if (!isNotEmptyString(process.env.OPENAI_API_KEY) && !isNotEmptyString(process.env.OPENAI_ACCESS_TOKEN))
-//  throw new Error('Missing OPENAI_API_KEY or OPENAI_ACCESS_TOKEN environment variable')
+if (!isNotEmptyString(process.env.OPENAI_API_KEY) && !isNotEmptyString(process.env.OPENAI_ACCESS_TOKEN))
+  throw new Error('Missing OPENAI_API_KEY or OPENAI_ACCESS_TOKEN environment variable')
 
 let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
 
@@ -79,7 +76,7 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
     // 使用代理
     const options: ChatGPTUnofficialProxyAPIOptions = {
       accessToken: process.env.OPENAI_ACCESS_TOKEN,
-      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'http://chat-api.lastword.top/api/conversation',
+      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'https://ai.fakeopen.com/api/conversation',
       model,
       debug: !disableDebug,
     }
@@ -90,7 +87,7 @@ let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
     apiModel = 'ChatGPTUnofficialProxyAPI'
   } */
 
-  gptConfig({ apiKey: process.env.OPENAI_API_KEY, model })
+  gptConfig({ apiKey: process.env.OPENAI_API_KEY, accessToken: process.env.OPENAI_ACCESS_TOKEN, model })
 })()
 
 async function gptConfig(gptConfigOptions: GptConfigOptions) {
@@ -133,12 +130,14 @@ async function gptConfig(gptConfigOptions: GptConfigOptions) {
     // 使用代理
     const options: ChatGPTUnofficialProxyAPIOptions = {
       accessToken: gptConfigOptions.accessToken,
-      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'http://chat-api.lastword.top/api/conversation',
+      apiReverseProxyUrl: isNotEmptyString(process.env.API_REVERSE_PROXY) ? process.env.API_REVERSE_PROXY : 'https://ai.fakeopen.com/api/conversation',
       model: gptConfigOptions.model,
       debug: !disableDebug,
     }
 
     setupProxy(options)
+
+    console.warn(`LOG-options:${JSON.stringify(options)}`)
 
     api = new ChatGPTUnofficialProxyAPI({ ...options })
     apiModel = 'ChatGPTUnofficialProxyAPI'
