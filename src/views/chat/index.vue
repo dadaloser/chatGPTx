@@ -400,18 +400,7 @@ function handleClear() {
 
 // todo: 添加模型选择
 function handleChangeLanguageModel() {
-  if (loading.value)
-    return
-
-  dialog.warning({
-    title: t('chat.clearChat'),
-    content: t('chat.exportImage'),
-    positiveText: t('common.yes'),
-    negativeText: t('common.no'),
-    onPositiveClick: () => {
-      chatStore.clearChatByUuid(+uuid)
-    },
-  })
+  ms.info(t('common.developing'))
 }
 
 function handleEnter(event: KeyboardEvent) {

@@ -32,3 +32,6 @@ coverage
 /service/.env
 /.env
 .env
+
+/token/*
+token_file.txt
