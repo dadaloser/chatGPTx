@@ -1,8 +1,10 @@
 import type { Router } from 'vue-router'
 import { useAuthStoreWithout } from '@/store/modules/auth'
 
+// 验证权限
 export function setupPageGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
+    // todo: 需要判断登录
     const authStore = useAuthStoreWithout()
     if (!authStore.session) {
       try {

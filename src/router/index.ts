@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { setupPageGuard } from './permission'
 import { ChatLayout } from '@/views/chat/layout'
 
+// 路由列表
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -38,14 +39,17 @@ const routes: RouteRecordRaw[] = [
   },
 ]
 
+//  初始化路由
 export const router = createRouter({
   history: createWebHashHistory(),
   routes,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
+// 拦截设置
 setupPageGuard(router)
 
+// 设置路由
 export async function setupRouter(app: App) {
   app.use(router)
   await router.isReady()

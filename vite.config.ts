@@ -28,9 +28,11 @@ export default defineConfig((env) => {
     resolve: {
       alias: {
         '@': path.resolve(process.cwd(), 'src'),
+
       },
     },
     plugins: setupPlugins(viteEnv),
+
     server: {
       host: '0.0.0.0',
       port: 5439,
